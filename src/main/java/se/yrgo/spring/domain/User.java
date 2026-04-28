@@ -1,13 +1,106 @@
 package se.yrgo.spring.domain;
 
 import java.lang.annotation.Inherited;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String adress;
+    private String zip;
+    private String city;
+    @OneToMany
+    private List<Loan> loans;
+
+    public User(){}
+
+    public User(String firstName, String lastName, String email, String adress, String zip, String city,
+            List<Loan> loans) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.adress = adress;
+        this.zip = zip;
+        this.city = city;
+        this.loans = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<Loan> loans) {
+        this.loans = loans;
+    }
+
+    @Override
+    public String toString() {
+        return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", adress=" + adress
+                + ", zip=" + zip + ", city=" + city + ", loans=" + loans + "]";
+    }
+
 }
