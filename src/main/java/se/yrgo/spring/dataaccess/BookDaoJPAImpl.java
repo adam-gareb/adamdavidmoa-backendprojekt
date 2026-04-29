@@ -13,8 +13,8 @@ public class BookDaoJPAImpl implements BookDao {
     private EntityManager em;
 
     @Override
-    public List<Book> findAll() {
-        return em.createQuery("SELECT b FROM BOOK b", Book.class).getResultList();
+    public List<Book> getEntireCatalogue() {
+        return em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class BookDaoJPAImpl implements BookDao {
     }
 
     @Override
-    public void create(Book newBook) {
+    public void registerNewBook(Book newBook) {
         em.persist(newBook);
     }
 

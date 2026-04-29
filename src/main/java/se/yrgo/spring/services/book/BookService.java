@@ -15,8 +15,6 @@ public interface BookService {
 
     public void registerNewBook(Book newBook);
 
-    public void updateBook (Book book);
-
     public void deleteFromStock(Book book);
 
 }

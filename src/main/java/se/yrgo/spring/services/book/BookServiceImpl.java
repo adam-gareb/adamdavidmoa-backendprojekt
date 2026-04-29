@@ -43,11 +43,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(Book book) {
-        dao.updateBook(book);
-    }
-
-    @Override
     public void deleteFromStock(Book book) {
         dao.delete(book);
     }
