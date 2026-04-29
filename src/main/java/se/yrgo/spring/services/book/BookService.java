@@ -5,6 +5,7 @@ import java.util.List;
 import se.yrgo.spring.dataaccess.BookNotFoundException;
 import se.yrgo.spring.domain.Book;
 
+// Moa
 public interface BookService {
     public List<Book> getAllBooksByAuthor(String author);
 
