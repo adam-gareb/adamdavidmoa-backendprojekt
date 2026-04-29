@@ -5,11 +5,11 @@ import java.util.*;
 import org.hsqldb.rights.*;
 
 public interface UserService {
-    public void addUser(User user);
+    public User addUser(String userId, String );
 
-    public void updateUser(User user);
+    public User updateUser(User user);
 
-    public void deleteUser(User user);
+    public User deleteUser(User user);
 
     public List<User> getAllUsers();
 
