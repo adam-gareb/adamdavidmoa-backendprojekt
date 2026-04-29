@@ -1,6 +1,5 @@
 package se.yrgo.spring.domain;
 
-import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -20,10 +20,17 @@ public class User {
     @OneToMany
     private List<Loan> loans;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(String firstName, String lastName, String email, String adress, String zip, String city,
-            List<Loan> loans) {
+    public User(String userId,
+            String firstName,
+            String lastName,
+            String email,
+            String adress,
+            String zip,
+            String city) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -33,12 +40,12 @@ public class User {
         this.loans = new ArrayList<>();
     }
 
-    public int getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
