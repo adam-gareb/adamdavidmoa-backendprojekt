@@ -1,4 +1,4 @@
-package se.yrgo.spring.services;
+package se.yrgo.spring.services.user;
 
 import java.util.*;
 
