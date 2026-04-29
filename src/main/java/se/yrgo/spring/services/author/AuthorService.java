@@ -4,15 +4,12 @@ import se.yrgo.spring.domain.Author;
 
 import java.util.List;
 
+// Adam
 public interface AuthorService {
 
-    public void addAuthor(Author newAuthor);
-
-    public void updateAuthor(Author updatedAuthor);
+    public Author addAuthor(String name);
 
     public void deleteAuthor(Author deletedAuthor);
-
-    public Author findAuthorById(String authorId);
 
     public Author findAuthorByName(String name);
 
