@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import jakarta.persistence.*;
 
+// Adam
 @Entity
 public class Loan {
     @Id

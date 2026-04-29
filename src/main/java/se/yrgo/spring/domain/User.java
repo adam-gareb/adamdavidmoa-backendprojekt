@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+// David
 @Entity
 public class User {
     @Id
