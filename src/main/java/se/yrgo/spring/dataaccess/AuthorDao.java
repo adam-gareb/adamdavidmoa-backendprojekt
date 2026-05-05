@@ -4,6 +4,7 @@ import java.util.List;
 
 import se.yrgo.spring.domain.Author;
 
+// Adam
 public interface AuthorDao {
     public void create(Author author);
     public void delete(Author author);

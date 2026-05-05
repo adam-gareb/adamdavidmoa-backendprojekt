@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.Author;
 
+// Adam
 @Repository
 public class AuthorDaoJPAImpl implements AuthorDao {
 
