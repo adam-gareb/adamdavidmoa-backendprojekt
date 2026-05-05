@@ -19,7 +19,7 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public Book findByIsbn(String isbn) throws BookNotFoundException {
-        return em.createQuery("FROM BOOK b WHERE isbn = :isbn", Book.class).setParameter("isbn", isbn)
+        return em.createQuery("FROM Book b WHERE isbn = :isbn", Book.class).setParameter("isbn", isbn)
                 .getSingleResult();
     }
 

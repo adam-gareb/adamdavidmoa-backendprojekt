@@ -1,14 +1,13 @@
 package se.yrgo.spring.services.book;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import se.yrgo.spring.dataaccess.BookDao;
 import se.yrgo.spring.dataaccess.BookNotFoundException;
+import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
 
 // Moa
@@ -17,10 +16,11 @@ import se.yrgo.spring.domain.Book;
 @Transactional
 public class BookServiceImpl implements BookService {
 
-    @PersistenceContext
-    private EntityManager em;
-
     private BookDao dao;
+
+    public BookServiceImpl(BookDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public List<Book> getAllBooksByAuthor(String author) {
@@ -38,13 +38,26 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void registerNewBook(Book newBook) {
-        dao.registerNewBook(newBook);
+    public void registerNewBook(String isbn, String title, Set<Author> authors) {
+
+        try {
+            Book newBook = new Book(isbn, title, authors);
+            dao.registerNewBook(newBook);
+        } catch (Exception ex) {
+            System.err.println("Something went wrong when registering book: " + ex.getMessage());
+        }
+
     }
 
     @Override
-    public void deleteFromStock(Book book) {
-        dao.delete(book);
+    public void deleteFromStock(String isbn) {
+
+        try {
+            Book book = dao.findByIsbn(isbn);
+            dao.delete(book);
+        } catch (BookNotFoundException ex) {
+            System.err.println("Something went wrong when searching for book: " + ex.getMessage());
+        }
     }
 
 }

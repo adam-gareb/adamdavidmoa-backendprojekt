@@ -1,8 +1,10 @@
 package se.yrgo.spring.services.book;
 
 import java.util.List;
+import java.util.Set;
 
 import se.yrgo.spring.dataaccess.BookNotFoundException;
+import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
 
 // Moa
@@ -13,8 +15,8 @@ public interface BookService {
 
     public List<Book> getEntireCatalogue();
 
-    public void registerNewBook(Book newBook);
+    public void registerNewBook(String isbn, String title, Set<Author> authors);
 
-    public void deleteFromStock(Book book);
+    public void deleteFromStock(String isbn);
 
 }
