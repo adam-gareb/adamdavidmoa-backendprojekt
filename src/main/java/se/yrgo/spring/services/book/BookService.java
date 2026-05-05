@@ -8,6 +8,7 @@ import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
 
 // Moa
+
 public interface BookService {
     public List<Book> getAllBooksByAuthor(String author);
 

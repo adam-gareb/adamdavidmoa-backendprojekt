@@ -4,6 +4,8 @@ import java.util.List;
 
 import se.yrgo.spring.domain.Book;
 
+// Moa
+
 public interface BookDao {
     public List<Book> getEntireCatalogue();
     public Book findByIsbn(String isbn) throws BookNotFoundException;
