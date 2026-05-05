@@ -3,11 +3,6 @@ package se.yrgo.spring.services.author;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import se.yrgo.spring.dataaccess.AuthorDao;
 import se.yrgo.spring.domain.Author;
