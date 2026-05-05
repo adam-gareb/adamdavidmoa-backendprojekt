@@ -2,10 +2,11 @@ package se.yrgo.spring.services.user;
 
 import java.util.*;
 
-import org.hsqldb.rights.*;
 import org.springframework.stereotype.*;
 
 import jakarta.persistence.*;
+import se.yrgo.spring.dataaccess.*;
+import se.yrgo.spring.domain.*;
 
 // David
 @Service
@@ -13,25 +14,67 @@ public class UserServiceImpl implements UserService {
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("databaseConfig");
 
-    @Override
-    public User addUser(User user) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
+    private UserDao dao;
 
-        User 
+    @Override
+    public void addUser(String userId,
+            String firstName,
+            String lastName,
+            String email,
+            String address,
+            String zip,
+            String city) {
+        try (EntityManager em = emf.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+
+            User user = new User(userId, firstName, lastName, email, address, zip, city);
+
+            dao.create(user);
+
+            tx.commit();
+        } catch (Exception ex) {
+            System.err.println("Something went wrong: " + ex.getMessage());
+        }
+
     }
 
     @Override
-    public User updateUser(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+    public void updateUser(String userId,
+            String firstName,
+            String lastName,
+            String email,
+            String address,
+            String zip,
+            String city) {
+        try (EntityManager em = emf.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+
+            User user = new User(userId, firstName, lastName, email, address, zip, city);
+
+            dao.update(user);
+
+            tx.commit();
+        } catch (Exception ex) {
+            System.err.println("Something went wrong: " + ex.getMessage());
+        }
     }
 
     @Override
-    public User deleteUser(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+    public void deleteUser(String userId) {
+        try (EntityManager em = emf.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+
+            User user = dao.findUserById(userId);
+
+            dao.delete(user);
+
+            tx.commit();
+        } catch (Exception ex) {
+            System.err.println("Something went wrong: " + ex.getMessage());
+        }
     }
 
     @Override

@@ -26,6 +26,11 @@ public class UserDaoJpaImpl implements UserDao {
     }
 
     @Override
+    public void update(User user) {
+        em.merge(user);
+    }
+
+    @Override
     public User findUserById(String id) {
         return em.createQuery("FROM User u WHERE userId = :id", User.class)
                 .setParameter("id", id)

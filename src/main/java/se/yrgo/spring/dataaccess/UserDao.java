@@ -11,6 +11,8 @@ public interface UserDao {
 
     public void delete(User user);
 
+    public void update(User user);
+
     public User findUserById(String id);
 
     public List<User> findUserByLastName(String lastName);

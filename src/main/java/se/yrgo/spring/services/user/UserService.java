@@ -2,14 +2,26 @@ package se.yrgo.spring.services.user;
 
 import java.util.*;
 
-import org.hsqldb.rights.*;
+import se.yrgo.spring.domain.*;
 
 public interface UserService {
-    public User addUser(String userId, String );
+    public void addUser(String userId,
+            String firstName,
+            String lastName,
+            String email,
+            String address,
+            String zip,
+            String city);
 
-    public User updateUser(User user);
+    public void updateUser(String userId,
+            String firstName,
+            String lastName,
+            String email,
+            String address,
+            String zip,
+            String city);
 
-    public User deleteUser(User user);
+    public void deleteUser(String userId);
 
     public List<User> getAllUsers();
 
