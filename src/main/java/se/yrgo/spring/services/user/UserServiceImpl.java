@@ -3,18 +3,21 @@ package se.yrgo.spring.services.user;
 import java.util.*;
 
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
-import jakarta.persistence.*;
 import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // David
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("databaseConfig");
+    private final UserDao dao;
 
-    private UserDao dao;
+    public UserServiceImpl(UserDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public void addUser(String userId,
@@ -24,19 +27,12 @@ public class UserServiceImpl implements UserService {
             String address,
             String zip,
             String city) {
-        try (EntityManager em = emf.createEntityManager()) {
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-
+        try {
             User user = new User(userId, firstName, lastName, email, address, zip, city);
-
             dao.create(user);
-
-            tx.commit();
         } catch (Exception ex) {
-            System.err.println("Something went wrong: " + ex.getMessage());
+            System.err.println("Something went wrong with adding a user: " + ex.getMessage());
         }
-
     }
 
     @Override
@@ -47,58 +43,42 @@ public class UserServiceImpl implements UserService {
             String address,
             String zip,
             String city) {
-        try (EntityManager em = emf.createEntityManager()) {
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-
+        try {
             User user = new User(userId, firstName, lastName, email, address, zip, city);
-
             dao.update(user);
-
-            tx.commit();
         } catch (Exception ex) {
-            System.err.println("Something went wrong: " + ex.getMessage());
+            System.err.println("Something went wrong with updating a user: " + ex.getMessage());
         }
     }
 
     @Override
     public void deleteUser(String userId) {
-        try (EntityManager em = emf.createEntityManager()) {
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-
+        try {
             User user = dao.findUserById(userId);
-
-            dao.delete(user);
-
-            tx.commit();
+            dao.create(user);
         } catch (Exception ex) {
-            System.err.println("Something went wrong: " + ex.getMessage());
+            System.err.println("Something went wrong with deleting a user: " + ex.getMessage());
         }
     }
 
     @Override
     public List<User> getAllUsers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUsers'");
+        return dao.getAllUsers();
     }
 
     @Override
     public List<User> findUsersByLastName(String lastName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findUsersByLastName'");
+        return dao.findUserByLastName(lastName);
     }
 
     @Override
     public User findUserById(String userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findUserById'");
+        return findUserById(userId);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findUserByEmail'");
+        return findUserByEmail(email);
     }
 
 }

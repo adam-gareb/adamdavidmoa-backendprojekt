@@ -18,4 +18,6 @@ public interface UserDao {
     public List<User> findUserByLastName(String lastName);
 
     public User findUserByEmail(String email);
+
+    public List<User> getAllUsersWithLoans();
 }

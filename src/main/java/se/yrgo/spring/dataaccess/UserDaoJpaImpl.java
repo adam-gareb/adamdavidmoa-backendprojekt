@@ -2,9 +2,12 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.*;
 
+import org.springframework.stereotype.*;
+
 import jakarta.persistence.*;
 import se.yrgo.spring.domain.*;
 
+@Repository
 public class UserDaoJpaImpl implements UserDao {
 
     @PersistenceContext
@@ -50,5 +53,12 @@ public class UserDaoJpaImpl implements UserDao {
                 .setParameter("email", email)
                 .getSingleResult();
     }
+
+    @Override
+    public List<User> getAllUsersWithLoans() {
+        return em.createQuery("FROM User u JOIN Loan l WHERE u.id = l.loanId")
+    }
+
+    // Implementera join metoder också
 
 }
