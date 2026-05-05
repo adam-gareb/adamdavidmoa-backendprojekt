@@ -14,6 +14,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    private String authorId;
     private String name;
     
     @ManyToMany
@@ -21,9 +22,13 @@ public class Author {
 
     public Author(){}
 
-    public Author(String name, Set<Book> allBooks) {
+    public Author(String authorId, String name, Set<Book> allBooks) {
         this.name = name;
         this.allBooks = allBooks;
+    }
+
+    public Author(String authorId, String name){
+        this.name = name;
     }
 
     public String getName() {
@@ -44,7 +49,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author [name=" + name + ", allBooks=" + allBooks + "]";
+        return "Author name: " + name + "\nBooks: " + allBooks;
     }
     
 }
