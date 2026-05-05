@@ -2,11 +2,15 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.Book;
 
-// Skrivit ihop
+// Moa
+
+@Repository
 public class BookDaoJPAImpl implements BookDao {
 
     @PersistenceContext
@@ -35,7 +39,7 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public List<Book> findBooksByAuthor(String author) {
-        return em.createQuery("FROM BOOK b WHERE b.author = :author", Book.class).setParameter("author", author)
+        return em.createQuery("FROM Book b WHERE b.author = :author", Book.class).setParameter("author", author)
                 .getResultList();
     }
 
