@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
+import se.yrgo.spring.dataaccess.AuthorDao;
 import se.yrgo.spring.domain.Author;
 
 // Adam
@@ -18,16 +19,17 @@ public class AuthorServiceImpl implements AuthorService {
     @PersistenceContext
     private EntityManager em;
 
+    private AuthorDao dao;
+
     @Override
-    public Author addAuthor(String name) {
-        Author author = new Author(name);
+    public void addAuthor(String authorId, String name) {
+        Author author = new Author(authorId, name);
         em.persist(author);
-        return author;
     }
 
     @Override
     public void deleteAuthor(Author deletedAuthor) {
-        throw new UnsupportedOperationException("Unimplemented method 'deleteAuthor'");
+        dao.delete(deletedAuthor);
     }
 
     @Override

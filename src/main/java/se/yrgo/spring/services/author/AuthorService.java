@@ -7,7 +7,7 @@ import java.util.List;
 // Adam
 public interface AuthorService {
 
-    public Author addAuthor(String name);
+    public void addAuthor(String authorId, String name);
 
     public void deleteAuthor(Author deletedAuthor);
 
