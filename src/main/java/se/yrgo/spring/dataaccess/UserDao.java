@@ -19,5 +19,5 @@ public interface UserDao {
 
     public User findUserByEmail(String email);
 
-    public List<User> getAllUsersWithLoans();
+    public List<Loan> getAllUsersWithLoans();
 }

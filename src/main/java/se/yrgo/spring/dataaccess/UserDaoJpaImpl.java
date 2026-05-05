@@ -55,8 +55,8 @@ public class UserDaoJpaImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAllUsersWithLoans() {
-        return em.createQuery("FROM User u JOIN Loan l WHERE u.id = l.loanId")
+    public List<Loan> getAllUsersWithLoans() {
+        return em.createQuery("FROM Loan l JOIN User u WHERE u.userId = l.userId", Loan.class).getResultList();
     }
 
     // Implementera join metoder också
