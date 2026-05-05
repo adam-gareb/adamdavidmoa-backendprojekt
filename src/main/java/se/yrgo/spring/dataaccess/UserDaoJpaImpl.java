@@ -7,6 +7,7 @@ import org.springframework.stereotype.*;
 import jakarta.persistence.*;
 import se.yrgo.spring.domain.*;
 
+// David
 @Repository
 public class UserDaoJpaImpl implements UserDao {
 
