@@ -21,10 +21,15 @@ public class Book {
     public Book() {
     }
 
-    public Book(String isbn, String title, Set<Author> authors) {
+    public Book(String isbn, String title, Author author) {
         this.isbn = isbn;
         this.title = title;
         this.authors = new HashSet<>();
+        addAuthor(author);
+    }
+
+    public void addAuthor(Author author) {
+        authors.add(author);
     }
 
     public int getId() {
