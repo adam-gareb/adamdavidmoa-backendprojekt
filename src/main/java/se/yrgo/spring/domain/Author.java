@@ -23,12 +23,23 @@ public class Author {
     public Author(){}
 
     public Author(String authorId, String name, Set<Book> allBooks) {
+        this.authorId = authorId;
         this.name = name;
         this.allBooks = allBooks;
     }
 
     public Author(String authorId, String name){
+        this.authorId = authorId;
         this.name = name;
+    }
+
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getName() {
