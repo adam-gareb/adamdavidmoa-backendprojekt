@@ -1,6 +1,15 @@
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- Låter Spring automatiskt hitta våra klasser/beans -->
+    <context:component-scan base-package="se.yrgo" />
 
     <!--  We create our dataSource which will create database connections (using Apache DBCP
     connection pool  -->
@@ -34,24 +43,7 @@
             ref="entityManagerFactory" />
     </bean>
 
-    <!--  DAO is in charge of communication with SQL and database - we inject via constructor  -->
-    <bean id="userDao" class="se.yrgo.dataaccess.UserDaoJpaImpl">
-        <constructor-arg ref="jdbcTemplate" />
-    </bean>
-
-    <!-- Creating bean for CustomerManagementServiceProductionImpl -->
-    <bean id="customerManagementService"
-        class="se.yrgo.services.customers.CustomerManagementServiceProductionImpl">
-        <constructor-arg ref="customerDao" />
-    </bean>
-
-    <!-- Creating bean for CustomerManagementService  -->
-    <bean id="diaryManagementService" class="se.yrgo.services.diary.DiaryManagementServiceMockImpl" />
-
-    <!--  Wiring the two classes to callHandlingService using depencency  -->
-    <bean id="callHandlingService" class="se.yrgo.services.calls.CallHandlingServiceImpl">
-        <constructor-arg ref="customerManagementService" />
-        <constructor-arg ref="diaryManagementService" />
-    </bean>
+    <!-- Aktiverar transaktionshantering -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>
