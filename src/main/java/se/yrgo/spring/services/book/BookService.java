@@ -16,7 +16,7 @@ public interface BookService {
 
     public List<Book> getEntireCatalogue();
 
-    public void registerNewBook(String isbn, String title, Set<Author> authors);
+    public void registerNewBook(String isbn, String title, Author author);
 
     public void deleteFromStock(String isbn);
 

@@ -10,6 +10,7 @@ public class Loan {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    @OneToOne
     private Book book;
     private Date startDate;
     private Date dueDate;
@@ -65,7 +66,7 @@ public class Loan {
 
     @Override
     public String toString() {
-        return "Loan [book=" + book + ", startDate=" + startDate + ", dueDate=" + dueDate + ", user=" + user + "]";
+        return "Loan [book=" + book + ", startDate=" + startDate + ", dueDate=" + dueDate + "]";
     }
 
 }

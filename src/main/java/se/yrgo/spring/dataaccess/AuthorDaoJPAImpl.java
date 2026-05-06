@@ -28,14 +28,14 @@ public class AuthorDaoJPAImpl implements AuthorDao {
 
     @Override
     public Author findByName(String name) {
-        return em.createQuery("SELECT a FROM Author a WHERE a.name = :name", Author.class)
+        return em.createQuery("SELECT a FROM Author a JOIN FETCH a.allBooks WHERE a.name = :name", Author.class)
                 .setParameter("name", name)
                 .getSingleResult();
     }
 
     @Override
     public List<Author> getAllAuthors() {
-        return em.createQuery("SELECT a FROM Author a", Author.class)
+        return em.createQuery("SELECT a FROM Author a ", Author.class)
                 .getResultList();
     }
 }

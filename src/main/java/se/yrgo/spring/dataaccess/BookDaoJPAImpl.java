@@ -2,8 +2,6 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.EntityManager;
@@ -25,7 +23,8 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public Book findByIsbn(String isbn) throws BookNotFoundException {
-        return em.createQuery("FROM Book b WHERE isbn = :isbn", Book.class).setParameter("isbn", isbn)
+        return em.createQuery("FROM Book b LEFT JOIN FETCH b.authors WHERE isbn = :isbn", Book.class)
+                .setParameter("isbn", isbn)
                 .getSingleResult();
     }
 

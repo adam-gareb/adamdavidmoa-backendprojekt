@@ -108,7 +108,7 @@ public class User {
     @Override
     public String toString() {
         return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", adress=" + adress
-                + ", zip=" + zip + ", city=" + city + ", loans=" + loans + "]";
+                + ", zip=" + zip + ", city=" + city + "]";
     }
 
 }

@@ -19,9 +19,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void addAuthor(String authorId, String name) {
+    public Author addAuthor(String authorId, String name) {
         Author author = new Author(authorId, name);
         dao.create(author);
+        return author;
     }
 
     @Override

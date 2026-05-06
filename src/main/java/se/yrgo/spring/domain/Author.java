@@ -60,7 +60,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return "Author name: " + name + "\nBooks: " + allBooks;
+        return "Author name: " + name;
     }
     
 }
