@@ -66,7 +66,11 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book [id=" + id + ", isbn=" + isbn + ", title=" + title + "]";
+        return String.format("""
+                Book isbn: %s
+                Book title: %s
+                Author: %s
+                """, isbn, title, authors);
     }
 
 }
