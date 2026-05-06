@@ -6,7 +6,7 @@ import se.yrgo.spring.domain.*;
 
 // David
 public interface UserService {
-    public void addUser(String userId,
+    public User addUser(String userId,
             String firstName,
             String lastName,
             String email,
@@ -14,7 +14,7 @@ public interface UserService {
             String zip,
             String city);
 
-    public void updateUser(String userId,
+    public User updateUser(String userId,
             String firstName,
             String lastName,
             String email,
