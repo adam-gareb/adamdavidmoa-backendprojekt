@@ -12,8 +12,30 @@
         <property name="password" value="" />
     </bean>
 
+    <!-- Entity manager -->
+    <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="se.yrgo.spring.domain" />
+
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true" />
+                <property name="showSql" value="true" />
+                <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Transactions -->
+    <bean id="transactionManager"
+        class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory"
+            ref="entityManagerFactory" />
+    </bean>
+
     <!--  DAO is in charge of communication with SQL and database - we inject via constructor  -->
-    <bean id="customerDao" class="se.yrgo.dataaccess.CustomerDaoJdbcTemplateImpl">
+    <bean id="userDao" class="se.yrgo.dataaccess.UserDaoJpaImpl">
         <constructor-arg ref="jdbcTemplate" />
     </bean>
 
