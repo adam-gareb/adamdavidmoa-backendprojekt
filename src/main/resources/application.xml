@@ -9,7 +9,7 @@
                         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Låter Spring automatiskt hitta våra klasser/beans -->
-    <context:component-scan base-package="se.yrgo" />
+    <context:component-scan base-package="se.yrgo.spring" />
 
     <!--  We create our dataSource which will create database connections (using Apache DBCP
     connection pool  -->
