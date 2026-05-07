@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(String userId,
+    public User addUser(String userId,
             String firstName,
             String lastName,
             String email,
@@ -30,13 +30,15 @@ public class UserServiceImpl implements UserService {
         try {
             User user = new User(userId, firstName, lastName, email, address, zip, city);
             dao.create(user);
+            return user;
         } catch (Exception ex) {
             System.err.println("Something went wrong with adding a user: " + ex.getMessage());
+            return null;
         }
     }
 
     @Override
-    public void updateUser(String userId,
+    public User updateUser(String userId,
             String firstName,
             String lastName,
             String email,
@@ -46,8 +48,10 @@ public class UserServiceImpl implements UserService {
         try {
             User user = new User(userId, firstName, lastName, email, address, zip, city);
             dao.update(user);
+            return user;
         } catch (Exception ex) {
             System.err.println("Something went wrong with updating a user: " + ex.getMessage());
+            return null;
         }
     }
 
