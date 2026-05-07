@@ -1,6 +1,6 @@
 package se.yrgo.spring.domain;
 
-import java.util.Set;
+import java.util.*;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,27 +12,28 @@ import jakarta.persistence.ManyToMany;
 @Entity
 public class Author {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String authorId;
     private String name;
-    
+
     @ManyToMany
     private Set<Book> allBooks;
 
-    public Author(){}
-
-    public Author(String authorId, String name, Set<Book> allBooks) {
-        this.authorId = authorId;
-        this.name = name;
-        this.allBooks = allBooks;
+    public Author() {
     }
 
-    public Author(String authorId, String name){
+    // public Author(String authorId, String name, Set<Book> allBooks) {
+    // this.authorId = authorId;
+    // this.name = name;
+    // this.allBooks = allBooks;
+    // }
+
+    public Author(String authorId, String name) {
         this.authorId = authorId;
         this.name = name;
+        this.allBooks = new HashSet<>();
     }
-
 
     public String getAuthorId() {
         return authorId;
@@ -62,5 +63,5 @@ public class Author {
     public String toString() {
         return "Author name: " + name;
     }
-    
+
 }

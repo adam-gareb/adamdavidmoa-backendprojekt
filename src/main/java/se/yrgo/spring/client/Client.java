@@ -1,5 +1,7 @@
 package se.yrgo.spring.client;
 
+import java.util.*;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import se.yrgo.spring.domain.*;
@@ -21,7 +23,13 @@ public class Client {
 
             Book book1 = book.getBookByIsbn("123123333");
 
+            Author author3 = author.findAuthorByName("Bertil");
+
+            Set<Book> books = author3.getAllBooks();
+
             System.out.println(book1.toString());
+
+            books.forEach(System.out::println);
 
         } catch (Exception ex) {
             System.out.println("Something went wrong: " + ex.getMessage());
