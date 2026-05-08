@@ -18,8 +18,8 @@ public class Client {
             BookService book = container.getBean(BookService.class);
             UserService user = container.getBean(UserService.class);
 
-            Author author1 = author.addAuthor("GRE-3", "Bertil");
-            book.registerNewBook("123123333", "hej", author1);
+            //Author author1 = author.addAuthor("GRE-3", "Bertil");
+            // book.registerNewBook("123123333", "hej", author1);
 
             Book book1 = book.getBookByIsbn("123123333");
 

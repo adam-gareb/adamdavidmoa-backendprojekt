@@ -46,8 +46,14 @@ public class UserServiceImpl implements UserService {
             String zip,
             String city) {
         try {
-            User user = new User(userId, firstName, lastName, email, address, zip, city);
-            dao.update(user);
+            User user = dao.findUserById(userId); // hämta befintlig
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setAdress(address);
+            user.setZip(zip);
+            user.setCity(city);
+            dao.update(user); // nu har den rätt id → UPDATE
             return user;
         } catch (Exception ex) {
             System.err.println("Something went wrong with updating a user: " + ex.getMessage());
@@ -59,7 +65,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String userId) {
         try {
             User user = dao.findUserById(userId);
-            dao.create(user);
+            dao.delete(user);
         } catch (Exception ex) {
             System.err.println("Something went wrong with deleting a user: " + ex.getMessage());
         }
@@ -77,12 +83,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(String userId) {
-        return findUserById(userId);
+        return dao.findUserById(userId);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return findUserByEmail(email);
+        return dao.findUserByEmail(email);
     }
 
 }

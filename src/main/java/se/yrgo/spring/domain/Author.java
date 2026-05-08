@@ -3,12 +3,7 @@ package se.yrgo.spring.domain;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 
 // Adam
 @Entity
@@ -19,8 +14,8 @@ public class Author {
     private String authorId;
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Book> allBooks;
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.EAGER)
+    private Set<Book> allBooks = new HashSet<>();
 
     public Author() {
     }
@@ -34,10 +29,9 @@ public class Author {
     public Author(String authorId, String name) {
         this.authorId = authorId;
         this.name = name;
-        this.allBooks = new HashSet<>();
     }
 
-    public void addBookToAuthor(Book newBook){
+    public void addBookToAuthor(Book newBook) {
         this.allBooks.add(newBook);
     }
 
@@ -68,13 +62,13 @@ public class Author {
     @Override
     public String toString() {
         String bookTitles = allBooks.stream()
-            .map(Book::getTitle)
-            .collect(Collectors.joining(", "));
+                .map(Book::getTitle)
+                .collect(Collectors.joining(", "));
 
         return String.format("""
-            Author: %s
-            Books by author: %s
-        """, name, bookTitles);
+                    Author: %s
+                    Books by author: %s
+                """, name, bookTitles);
     }
 
 }

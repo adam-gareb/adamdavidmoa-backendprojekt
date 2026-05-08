@@ -1,6 +1,6 @@
 package se.yrgo.spring.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.*;
 
@@ -8,18 +8,19 @@ import jakarta.persistence.*;
 @Entity
 public class Loan {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String loanId;
     @OneToOne
     private Book book;
     private Date startDate;
     private Date dueDate;
-    
+
     @ManyToOne
     private User user;
 
-    public Loan(){}
+    public Loan() {
+    }
 
     public Loan(String loanId, Book book, Date startDate, Date dueDate, User user) {
         this.book = book;
