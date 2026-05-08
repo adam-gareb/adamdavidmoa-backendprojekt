@@ -31,6 +31,10 @@ public class Author {
         this.name = name;
     }
 
+    public void addBookToAuthor(Book newBook) {
+        this.allBooks.add(newBook);
+    }
+
     public String getAuthorId() {
         return authorId;
     }
@@ -57,7 +61,14 @@ public class Author {
 
     @Override
     public String toString() {
-        return name;
+        String bookTitles = allBooks.stream()
+                .map(Book::getTitle)
+                .collect(Collectors.joining(", "));
+
+        return String.format("""
+                    Author: %s
+                    Books by author: %s
+                """, name, bookTitles);
     }
 
 }
