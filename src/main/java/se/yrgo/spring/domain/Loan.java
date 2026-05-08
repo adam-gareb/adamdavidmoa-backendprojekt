@@ -10,6 +10,7 @@ public class Loan {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
+    private String loanId;
     @OneToOne
     private Book book;
     private Date startDate;
@@ -20,20 +21,23 @@ public class Loan {
 
     public Loan(){}
 
-    public Loan(Book book, Date startDate, Date dueDate, User user) {
+    public Loan(String loanId, Book book, Date startDate, Date dueDate, User user) {
         this.book = book;
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.user = user;
     }
 
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Book getBook() {
         return book;
+    }
+
+    public String getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(String loanId) {
+        this.loanId = loanId;
     }
 
     public void setBook(Book book) {
@@ -66,7 +70,12 @@ public class Loan {
 
     @Override
     public String toString() {
-        return "Loan [book=" + book + ", startDate=" + startDate + ", dueDate=" + dueDate + "]";
+        return String.format("""
+                User: %s
+                Book(s) loaned: %s
+                Start date:
+                Due date:
+                """, user, book, startDate, dueDate);
     }
 
 }
