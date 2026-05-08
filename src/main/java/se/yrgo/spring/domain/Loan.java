@@ -1,6 +1,6 @@
 package se.yrgo.spring.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 import jakarta.persistence.*;
 

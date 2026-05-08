@@ -9,7 +9,7 @@ public interface LoanDao {
 
     public List<Loan> getAllLoans();
 
-    public User findByUser(String userId);
+    public List<Loan> findByUser(String userId);
 
     public Loan addLoan(Book book, Date startDate, Date dueDate, User user);
 
