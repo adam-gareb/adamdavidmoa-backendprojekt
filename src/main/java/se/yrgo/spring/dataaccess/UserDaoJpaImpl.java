@@ -16,7 +16,7 @@ public class UserDaoJpaImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        return em.createQuery("FROM User u", User.class).getResultList();
+        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     @Override
@@ -26,7 +26,8 @@ public class UserDaoJpaImpl implements UserDao {
 
     @Override
     public void delete(User user) {
-        em.remove(user);
+        User managed = em.merge(user);
+        em.remove(managed);
     }
 
     @Override
@@ -36,28 +37,28 @@ public class UserDaoJpaImpl implements UserDao {
 
     @Override
     public User findUserById(String id) {
-        return em.createQuery("FROM User u WHERE userId = :id", User.class)
+        return em.createQuery("SELECT u FROM User u WHERE u.userId = :id", User.class)
                 .setParameter("id", id)
                 .getSingleResult();
     }
 
     @Override
     public List<User> findUserByLastName(String lastName) {
-        return em.createQuery("FROM User u WHERE lastname = :lastname", User.class)
-                .setParameter("lastname", lastName)
+        return em.createQuery("SELECT u FROM User u WHERE u.lastName = :lastName", User.class)
+                .setParameter("lastName", lastName)
                 .getResultList();
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return em.createQuery("FROM User u WHERE email = :email", User.class)
+        return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }
 
     @Override
     public List<Loan> getAllUsersWithLoans() {
-        return em.createQuery("FROM Loan l JOIN User u WHERE u.userId = l.userId", Loan.class).getResultList();
+        return em.createQuery("SELECT l FROM Loan l JOIN l.user u", Loan.class).getResultList();
     }
 
     // Implementera join metoder också

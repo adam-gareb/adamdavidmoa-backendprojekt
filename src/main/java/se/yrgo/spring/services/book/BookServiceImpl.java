@@ -1,10 +1,9 @@
 package se.yrgo.spring.services.book;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.dataaccess.BookDao;
 import se.yrgo.spring.dataaccess.BookNotFoundException;
 import se.yrgo.spring.domain.Author;
@@ -42,6 +41,7 @@ public class BookServiceImpl implements BookService {
 
         try {
             Book newBook = new Book(isbn, title, author);
+
             dao.registerNewBook(newBook);
         } catch (Exception ex) {
             System.err.println("Something went wrong when registering book: " + ex.getMessage());

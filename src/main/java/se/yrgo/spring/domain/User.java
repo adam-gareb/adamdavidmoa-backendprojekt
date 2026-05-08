@@ -18,7 +18,7 @@ public class User {
     private String adress;
     private String zip;
     private String city;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Loan> loans;
 
     public User() {

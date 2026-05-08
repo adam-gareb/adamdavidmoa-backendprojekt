@@ -15,7 +15,7 @@ public class Book {
     private String isbn;
     private String title;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Author> authors;
 
     public Book() {

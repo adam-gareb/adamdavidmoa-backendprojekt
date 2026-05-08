@@ -8,17 +8,18 @@ import jakarta.persistence.*;
 @Entity
 public class Loan {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
+    @ManyToOne
     private Book book;
     private Date startDate;
     private Date dueDate;
-    
+
     @ManyToOne
     private User user;
 
-    public Loan(){}
+    public Loan() {
+    }
 
     public Loan(Book book, Date startDate, Date dueDate, User user) {
         this.book = book;
@@ -26,7 +27,6 @@ public class Loan {
         this.dueDate = dueDate;
         this.user = user;
     }
-
 
     public void setId(int id) {
         this.id = id;

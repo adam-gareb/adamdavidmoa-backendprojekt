@@ -23,7 +23,7 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public Book findByIsbn(String isbn) throws BookNotFoundException {
-        return em.createQuery("FROM Book b LEFT JOIN FETCH b.authors WHERE isbn = :isbn", Book.class)
+        return em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
                 .setParameter("isbn", isbn)
                 .getSingleResult();
     }
@@ -35,12 +35,14 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public void delete(Book redundantBook) {
-        em.remove(redundantBook);
+        Book managed = em.merge(redundantBook);
+        em.remove(managed);
     }
 
     @Override
     public List<Book> findBooksByAuthor(String author) {
-        return em.createQuery("FROM Book b WHERE b.author = :author", Book.class).setParameter("author", author)
+        return em.createQuery("SELECT b FROM Book b JOIN b.authors a WHERE a.name = :author", Book.class)
+                .setParameter("author", author)
                 .getResultList();
     }
 

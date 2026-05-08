@@ -1,7 +1,6 @@
 package se.yrgo.spring.services.book;
 
 import java.util.List;
-import java.util.Set;
 
 import se.yrgo.spring.dataaccess.BookNotFoundException;
 import se.yrgo.spring.domain.Author;

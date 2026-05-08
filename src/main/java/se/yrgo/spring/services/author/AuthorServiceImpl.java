@@ -3,7 +3,7 @@ package se.yrgo.spring.services.author;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.dataaccess.AuthorDao;
 import se.yrgo.spring.domain.Author;
 
@@ -14,7 +14,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private AuthorDao dao;
 
-    public AuthorServiceImpl(AuthorDao dao){
+    public AuthorServiceImpl(AuthorDao dao) {
         this.dao = dao;
     }
 
