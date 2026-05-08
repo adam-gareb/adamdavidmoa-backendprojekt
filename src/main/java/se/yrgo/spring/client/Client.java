@@ -25,11 +25,30 @@ public class Client {
 
             Author author3 = author.findAuthorByName("Bertil");
 
+            author3.addBookToAuthor(book1);
+
             Set<Book> books = author3.getAllBooks();
 
             System.out.println(book1.toString());
 
+
+            Author newAuthor = author.addAuthor("BAA-9", "Johnson");
+            Author newAuthor2 = author.addAuthor("BAA-8", "Rickardsson");
+
+            book.registerNewBook("99999888", "The Book.", newAuthor);
+            Book newBook = book.getBookByIsbn("99999888");
+
+            newAuthor.addBookToAuthor(newBook);
+            newAuthor.addBookToAuthor(book1);
+            
+            newBook.addAuthor(newAuthor2);
+
+            books.add(newBook);
+
             books.forEach(System.out::println);
+
+            System.out.println("Authors:");
+            System.out.println(newAuthor.toString());
 
         } catch (Exception ex) {
             System.out.println("Something went wrong: " + ex.getMessage());

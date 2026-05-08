@@ -2,6 +2,7 @@ package se.yrgo.spring.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
 
@@ -66,11 +67,15 @@ public class Book {
 
     @Override
     public String toString() {
+        String authorNames = authors.stream()
+            .map(Author::getName)
+            .collect(Collectors.joining(", "));
+
         return String.format("""
                 Book isbn: %s
                 Book title: %s
                 Author: %s
-                """, isbn, title, authors);
+                """, isbn, title, authorNames);
     }
 
 }

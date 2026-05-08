@@ -1,6 +1,7 @@
 package se.yrgo.spring.domain;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
 
