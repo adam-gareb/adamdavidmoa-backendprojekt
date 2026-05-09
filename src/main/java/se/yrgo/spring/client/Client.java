@@ -128,7 +128,12 @@ public class Client {
 
                     }
                     case "4" -> {
-
+                        System.out.print("Skriv in din mail: ");
+                        User theUser = user.findUserByEmail(input.nextLine());
+                        List<Loan> loans = theUser.getLoans();
+                        loans.forEach(System.out::println);
+                        System.out.print("Skriv 0 för att avsluta: ");
+                        input.nextLine();
                     }
                     case "5" -> {
 
