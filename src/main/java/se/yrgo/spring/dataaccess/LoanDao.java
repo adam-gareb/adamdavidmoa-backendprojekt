@@ -11,10 +11,10 @@ public interface LoanDao {
 
     public List<Loan> findByUser(String userId);
 
-    public Loan addLoan(Book book, Date startDate, Date dueDate, User user);
+    public Loan addLoan(String loandId, Book book, Date startDate, Date dueDate, User user);
 
-    public Loan deleteLoan(Book book, Date startDate, Date dueDate, User user);
+    public Loan deleteLoan(String loanId, Book book, Date startDate, Date dueDate, User user);
 
-    public Loan updateLoan(Book book, Date startDate, Date dueDate, User user);
+    public Loan updateLoan(String loanId, Book book, Date startDate, Date dueDate, User user);
 
 }

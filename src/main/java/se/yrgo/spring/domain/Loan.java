@@ -23,6 +23,7 @@ public class Loan {
     }
 
     public Loan(String loanId, Book book, Date startDate, Date dueDate, User user) {
+        this.loanId = loanId;
         this.book = book;
         this.startDate = startDate;
         this.dueDate = dueDate;
