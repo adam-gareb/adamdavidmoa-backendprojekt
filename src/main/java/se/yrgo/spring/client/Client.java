@@ -61,9 +61,9 @@ public class Client {
                         System.out.println("Added user: " + user.findUserByEmail(email));
                     }
                     case "2" -> {
+                        System.out.println("Skriv in din mail:");
+                        String emailChoice = input.nextLine();
                         while (!choice.equals("5")) {
-                            System.out.println("Skriv in din mail:");
-                            String emailChoice = input.nextLine();
                             User theUser = user.findUserByEmail(emailChoice);
                             System.out.printf("""
                                     1. Ändra mail
@@ -125,7 +125,9 @@ public class Client {
 
                     }
                     case "3" -> {
-
+                        System.out.print("Skriv in din mail: ");
+                        User theUser = user.findUserByEmail(input.nextLine());
+                        
                     }
                     case "4" -> {
                         System.out.print("Skriv in din mail: ");
