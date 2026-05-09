@@ -60,7 +60,52 @@ public class Client {
                         System.out.println("Added user: " + user.findUserByEmail(email));
                     }
                     case "2" -> {
+                        System.out.println("Skriv in din mail:");
+                        String emailChoice = input.nextLine();
+                        User theUser = user.findUserByEmail(emailChoice);
+                        System.out.printf("""
+                                1. Ändra mail
+                                2. Ändra lösenord
+                                3. Ändra namn
+                                4. Ändra postadress
+                                """);
+                        choice = input.nextLine();
 
+                        String newMail;
+                        String newPassword;
+                        String newFirstName;
+                        String newLastName;
+                        String newAddress;
+                        String newZip;
+                        String newCity;
+                        switch(choice){
+                            case "1" -> {
+                                System.out.println("Skriv din nya mail:");
+                                newMail = input.nextLine();
+                            }
+                            case "2" -> {
+                                System.out.println("Skriv in ditt nya lösenord:");
+                                newPassword = input.nextLine();
+                            }
+                            case "3" -> {
+                                System.out.println("Skriv ditt nya förnamn:");
+                                newFirstName = input.nextLine();
+                                System.out.println("Skriv ditt nya efternamn:");
+                                newLastName = input.nextLine();
+                            }
+                            case "4" -> {
+                                System.out.println("Skriv din nya adress:");
+                                newAddress = input.nextLine();
+                                System.out.println("Skriv ditt nya postnummer:");
+                                newZip = input.nextLine();
+                                System.out.println("Skriv din nya stad:");
+                                newCity = input.nextLine();
+                            }
+                            default -> {
+                                System.out.println("Något gick fel. Försök igen!");
+                            }
+                        }
+                        theUser.updateUser(newFirstName, newLastName, newMail, newPassword, newAddress, newZip, newCity);
                     }
                     case "3" -> {
 
