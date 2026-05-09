@@ -2,6 +2,7 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -20,27 +21,28 @@ public class LoanDaoJPAImpl implements LoanDao {
     }
 
     @Override
-    public List<Loan> findByUser(String userId) {
-        return em.createQuery(
+    public Loan findByUser(String userId) {
+        Loan loan = em.createQuery(
                 "SELECT l FROM Loan l JOIN l.user u WHERE u.userId = :userId",
                 Loan.class)
                 .setParameter("userId", userId)
-                .getResultList();
-    }
+                .getSingleResult();
 
-    @Override
-    public Loan addLoan(String loanId, Book book, Date startDate, Date dueDate, User user) {
-        Loan loan = new Loan(loanId, book, startDate, dueDate, user);
-        em.persist(loan);
         return loan;
     }
 
     @Override
-    public Loan deleteLoan(String loanId, Book book, Date startDate, Date dueDate, User user) {
+    public void addLoan(String loanId, Book book, Date startDate, Date dueDate, User user) {
+        Loan loan = new Loan(loanId, book, startDate, dueDate, user);
+        em.persist(loan);
+    }
+
+    @Override
+    public Loan deleteLoan(String loanId) {
         Loan loan = em.createQuery(
                 "SELECT l FROM Loan l WHERE l.loandId = :loandId",
                 Loan.class)
-                .setParameter("loandId", loanId)
+                .setParameter("loanId", loanId)
                 .getSingleResult();
 
         em.remove(loan);
@@ -48,14 +50,23 @@ public class LoanDaoJPAImpl implements LoanDao {
     }
 
     @Override
-    public Loan updateLoan(String loanId, Book book, Date startDate, Date dueDate, User user) {
-        Loan loan = em.createQuery("SELECT l FROM Loan l WHERE l.loanId = :loanId",
-                Loan.class)
+    public void updateLoan(String loanId, Date dueDate) {
+        // Loan loan = em.createQuery("SELECT l FROM Loan l WHERE l.loanId = :loanId",
+        // Loan.class)
+        // .setParameter("loanId", loanId)
+        // .getSingleResult();
+
+        // Loan loan = em.createQuery("UPDATE Loan l SET ")
+        // .setParameter("dueDate", dueDate)
+
+        // em.merge(loan);
+
+        Loan loan = em.createQuery("SELECT l FROM Loan l WHERE l.loanId = :loanId", Loan.class)
                 .setParameter("loanId", loanId)
                 .getSingleResult();
 
-        em.merge(loan);
-        return loan;
+        Date newDueDate = new Date(loan.getDueDate().getTime() + 14L * 24 * 60 * 60 * 1000);
+        loan.setDueDate(newDueDate);
     }
 
 }

@@ -1,6 +1,7 @@
 package se.yrgo.spring.services.loan;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 import se.yrgo.spring.domain.*;
@@ -8,13 +9,13 @@ import se.yrgo.spring.domain.*;
 //Adam
 
 public interface LoanService {
-    public Loan addLoan(String loanId, Book book, Date startDate, Date dueDate, User user);
+    public void addLoan(String loanId, Book book, Date startDate, Date dueDate, User user);
 
     public void removeLoan(String loanId);
 
-    public Set<Loan> getAllLoans();
+    public List<Loan> getAllLoans();
 
-    public void updateLoan(String loanId);
+    public void updateLoan(String loanId, Date dueDate);
 
     public Loan findLoanById(String loanId);
 }
