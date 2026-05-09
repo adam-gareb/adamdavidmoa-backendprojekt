@@ -24,11 +24,12 @@ public class UserServiceImpl implements UserService {
             String firstName,
             String lastName,
             String email,
+            String password,
             String address,
             String zip,
             String city) {
         try {
-            User user = new User(userId, firstName, lastName, email, address, zip, city);
+            User user = new User(userId, firstName, lastName, email, password, address, zip, city);
             dao.create(user);
             return user;
         } catch (Exception ex) {
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
             String firstName,
             String lastName,
             String email,
+            String password,
             String address,
             String zip,
             String city) {
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setEmail(email);
+            user.setPassword(password);
             user.setAdress(address);
             user.setZip(zip);
             user.setCity(city);

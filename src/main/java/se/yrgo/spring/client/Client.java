@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import se.yrgo.spring.domain.*;
+import se.yrgo.spring.misc.*;
 import se.yrgo.spring.services.author.AuthorService;
 import se.yrgo.spring.services.book.BookService;
 import se.yrgo.spring.services.user.UserService;
@@ -18,37 +19,64 @@ public class Client {
             BookService book = container.getBean(BookService.class);
             UserService user = container.getBean(UserService.class);
 
-            //Author author1 = author.addAuthor("GRE-3", "Bertil");
-            // book.registerNewBook("123123333", "hej", author1);
+            Set<String> ids = new HashSet<>();
+            UniqueIdGenerator idGenerator = new UniqueIdGenerator();
 
-            Book book1 = book.getBookByIsbn("123123333");
+            while (true) {
+                Scanner input = new Scanner(System.in);
+                System.out.printf("""
+                        Välkommen till biblioteket(använd 1, 2, 3 etc.. för att göra val)
+                        1. Logga in/Skapa användare
+                        2. Redigera användare
+                        3. Låna en bok
+                        4. Visa dina lån
+                        5. Admin meny
+                        """);
+                String choice = input.nextLine();
+                String email;
+                String password;
+                String firstName;
+                String lastName;
+                String address;
+                String zip;
+                String city;
+                switch (choice) {
+                    case "1" -> {
+                        System.out.print("Skriv in din mail: ");
+                        email = input.nextLine();
+                        System.out.print("Skriv in ditt förnamn: ");
+                        firstName = input.nextLine();
+                        System.out.print("Skriv in ditt efternamn: ");
+                        lastName = input.nextLine();
+                        System.out.print("Skriv in din adress: ");
+                        address = input.nextLine();
+                        System.out.print("Skriv in din zipkod: ");
+                        zip = input.nextLine();
+                        System.out.print("Skriv in din stad: ");
+                        city = input.nextLine();
+                        System.out.print("Skriv in ett lösenord: ");
+                        password = input.nextLine();
+                        user.addUser(idGenerator.generateUniqueId(ids), firstName, lastName, email, password, address, zip, city);
+                        System.out.println("Added user: " + user.findUserByEmail(email));
+                    }
+                    case "2" -> {
 
-            Author author3 = author.findAuthorByName("Bertil");
+                    }
+                    case "3" -> {
 
-            author3.addBookToAuthor(book1);
+                    }
+                    case "4" -> {
 
-            Set<Book> books = author3.getAllBooks();
+                    }
+                    case "5" -> {
 
-            System.out.println(book1.toString());
+                    }
+                    default -> {
 
-
-            Author newAuthor = author.addAuthor("BAA-9", "Johnson");
-            Author newAuthor2 = author.addAuthor("BAA-8", "Rickardsson");
-
-            book.registerNewBook("99999888", "The Book.", newAuthor);
-            Book newBook = book.getBookByIsbn("99999888");
-
-            newAuthor.addBookToAuthor(newBook);
-            newAuthor.addBookToAuthor(book1);
-            
-            newBook.addAuthor(newAuthor2);
-
-            books.add(newBook);
-
-            books.forEach(System.out::println);
-
-            System.out.println("Authors:");
-            System.out.println(newAuthor.toString());
+                    }
+                }
+                break;
+            }
 
         } catch (Exception ex) {
             System.out.println("Something went wrong: " + ex.getMessage());

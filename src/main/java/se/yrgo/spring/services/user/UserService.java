@@ -10,6 +10,7 @@ public interface UserService {
             String firstName,
             String lastName,
             String email,
+            String password,
             String address,
             String zip,
             String city);
@@ -18,6 +19,7 @@ public interface UserService {
             String firstName,
             String lastName,
             String email,
+            String password,
             String address,
             String zip,
             String city);
