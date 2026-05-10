@@ -1,11 +1,10 @@
 package se.yrgo.spring.dataaccess;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.*;
 import se.yrgo.spring.domain.Book;
 
 // Moa

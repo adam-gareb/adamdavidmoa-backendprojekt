@@ -1,16 +1,12 @@
 package se.yrgo.spring.dataaccess;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.stereotype.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import se.yrgo.spring.domain.Book;
-import se.yrgo.spring.domain.Loan;
-import se.yrgo.spring.domain.User;
+import se.yrgo.spring.domain.*;
 
 @Repository
 public class LoanDaoJPAImpl implements LoanDao {

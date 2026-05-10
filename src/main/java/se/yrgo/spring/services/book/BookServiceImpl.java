@@ -1,13 +1,11 @@
 package se.yrgo.spring.services.book;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import se.yrgo.spring.dataaccess.BookDao;
-import se.yrgo.spring.dataaccess.BookNotFoundException;
-import se.yrgo.spring.domain.Author;
-import se.yrgo.spring.domain.Book;
+import se.yrgo.spring.dataaccess.*;
+import se.yrgo.spring.domain.*;
 
 // Moa
 

@@ -1,8 +1,8 @@
 package se.yrgo.spring.services.author;
 
-import se.yrgo.spring.domain.Author;
+import se.yrgo.spring.domain.*;
 
-import java.util.List;
+import java.util.*;
 
 // Adam
 public interface AuthorService {

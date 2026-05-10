@@ -1,8 +1,7 @@
 package se.yrgo.spring.services.loan;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import se.yrgo.spring.domain.*;
 
