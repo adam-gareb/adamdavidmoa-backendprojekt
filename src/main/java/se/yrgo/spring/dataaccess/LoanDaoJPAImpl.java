@@ -31,9 +31,12 @@ public class LoanDaoJPAImpl implements LoanDao {
     }
 
     @Override
-    public void addLoan(String loanId, Book book, Date startDate, Date dueDate, User user) {
+    public Loan addLoan(String loanId, Set<Book> book, Date startDate, Date dueDate, User user) {
         Loan loan = new Loan(loanId, book, startDate, dueDate, user);
+
         em.persist(loan);
+
+        return loan;
     }
 
     @Override

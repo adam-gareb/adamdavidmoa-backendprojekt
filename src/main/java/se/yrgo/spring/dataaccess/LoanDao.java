@@ -11,7 +11,7 @@ public interface LoanDao {
 
     public Loan findByUser(String userId);
 
-    public void addLoan(String loandId, Book book, Date startDate, Date dueDate, User user);
+    public Loan addLoan(String loandId, Set<Book> books, Date startDate, Date dueDate, User user);
 
     public Loan deleteLoan(String loanId);
 

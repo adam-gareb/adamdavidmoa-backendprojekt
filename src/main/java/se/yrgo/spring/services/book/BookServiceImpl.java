@@ -35,16 +35,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void registerNewBook(String isbn, String title, Author author) {
+    public Book registerNewBook(String isbn, String title, Author author) {
+
+        Book newBook = new Book(isbn, title, author);
 
         try {
-            Book newBook = new Book(isbn, title, author);
-
             dao.registerNewBook(newBook);
+
         } catch (Exception ex) {
             System.err.println("Something went wrong when registering book: " + ex.getMessage());
         }
-
+        
+        return newBook;
     }
 
     @Override

@@ -21,8 +21,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void addLoan(String loanId, Book book, Date startDate, Date dueDate, User user) {
-        dao.addLoan(loanId, book, startDate, dueDate, user);
+    public Loan addLoan(String loanId, Set<Book> books, Date startDate, Date dueDate, User user) {
+        Loan loan = new Loan(loanId, books, startDate, dueDate, user);
+
+        dao.addLoan(loanId, books, startDate, dueDate, user);
+        
+        return loan;
     }
 
     @Override

@@ -8,6 +8,7 @@ import se.yrgo.spring.domain.*;
 import se.yrgo.spring.misc.*;
 import se.yrgo.spring.services.author.AuthorService;
 import se.yrgo.spring.services.book.BookService;
+import se.yrgo.spring.services.loan.LoanService;
 import se.yrgo.spring.services.user.UserService;
 
 public class Client {
@@ -18,14 +19,18 @@ public class Client {
             AuthorService author = container.getBean(AuthorService.class);
             BookService book = container.getBean(BookService.class);
             UserService user = container.getBean(UserService.class);
+            LoanService loan = container.getBean(LoanService.class);
 
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
 
+            Author authorNumber1 = author.addAuthor(idGenerator.generateUniqueId(ids), "Author of 1");
+            Author authorNumber2 = author.addAuthor(idGenerator.generateUniqueId(ids), "Author of 2");
+
             while (true) {
                 Scanner input = new Scanner(System.in);
                 System.out.printf("""
-                        Välkommen till biblioteket(använd 1, 2, 3 etc.. för att göra val)
+                        Välkommen till biblioteket (använd 1, 2, 3 etc.. för att göra val)
                         1. Logga in/Skapa användare
                         2. Redigera användare
                         3. Låna en bok
@@ -127,6 +132,54 @@ public class Client {
                     case "3" -> {
                         System.out.print("Skriv in din mail: ");
                         User theUser = user.findUserByEmail(input.nextLine());
+
+                        // Någon hantering av när man skrivit fel mail, eller mail som inte är
+                        // registrerad med en användare?
+
+                        Loan newLoan;
+                        Set<Book> booksToLoan = new HashSet<>();
+
+                        System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
+                        while (true) {
+                            System.out.println("Skriv ISBN på bok som du vill låna (skriv '0' när du är klar):");
+                            System.out
+                                    .println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
+                            for (Book aBook : book.getEntireCatalogue()) {
+                                //if satsen verkar inte fungera som den ska?
+                                if (aBook.isAvailable()) {
+                                    System.out.println("-------------");
+                                    System.out.println(aBook.toString() + "-------------");
+                                }
+                            }
+                            choice = input.nextLine();
+
+                            if (choice.equals("0"))
+                                break;
+
+                            if (booksToLoan.contains(book.getBookByIsbn(choice))) {
+                                booksToLoan.remove(book.getBookByIsbn(choice));
+                                System.out
+                                        .println("Tog bort " + book.getBookByIsbn(choice).getTitle() + " från lånet\n");
+                            } else {
+                                booksToLoan.add(book.getBookByIsbn(choice));
+                                System.out.println(book.getBookByIsbn(choice).getTitle() + " lades till i lånet!\n");
+                            }
+                        }
+
+                        Date startDate = new Date();
+                        Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
+
+                        // kolla ifall isAvailable och setAvailable fungerar på rätt sätt
+                        newLoan = loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
+
+                        for (Book unavailableBook : booksToLoan) {
+                            unavailableBook.setAvailable(false);
+                        }
+
+                        if (!booksToLoan.isEmpty()) {
+                            System.out.println("Följande böcker har blivit utlånade:");
+                            booksToLoan.forEach(System.out::println);
+                        }
 
                     }
                     case "4" -> {

@@ -1,6 +1,8 @@
 package se.yrgo.spring.domain;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -11,8 +13,8 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String loanId;
-    @OneToOne
-    private Book book;
+    @ManyToMany // En loan kan ha många böcker, en bok kan finnas i många loans
+    private Set<Book> books;
     private Date startDate;
     private Date dueDate;
 
@@ -22,16 +24,16 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String loanId, Book book, Date startDate, Date dueDate, User user) {
+    public Loan(String loanId, Set<Book> books, Date startDate, Date dueDate, User user) {
         this.loanId = loanId;
-        this.book = book;
+        this.books = books;
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.user = user;
     }
 
-    public Book getBook() {
-        return book;
+    public Set<Book> getBooks() {
+        return books;
     }
 
     public String getLoanId() {
@@ -42,8 +44,8 @@ public class Loan {
         this.loanId = loanId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBooks(Set<Book> book) {
+        this.books = book;
     }
 
     public Date getStartDate() {
@@ -77,7 +79,7 @@ public class Loan {
                 Book(s) loaned: %s
                 Start date:
                 Due date:
-                """, user, book, startDate, dueDate);
+                """, user, books, startDate, dueDate);
     }
 
 }

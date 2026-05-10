@@ -18,6 +18,8 @@ public class Book {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Author> authors;
 
+    private boolean available = true;
+
     public Book() {
     }
 
@@ -64,11 +66,34 @@ public class Book {
         this.authors = authors;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Book book = (Book) o;
+        return Objects.equals(isbn, book.isbn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn);
+    }
+
     @Override
     public String toString() {
         String authorNames = authors.stream()
-            .map(Author::getName)
-            .collect(Collectors.joining(", "));
+                .map(Author::getName)
+                .collect(Collectors.joining(", "));
 
         return String.format("""
                 Book isbn: %s
