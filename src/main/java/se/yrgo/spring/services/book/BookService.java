@@ -13,7 +13,7 @@ public interface BookService {
 
     public List<Book> getEntireCatalogue();
 
-    public void registerNewBook(String isbn, String title, Set<Author> author);
+    public Book registerNewBook(String isbn, String title, Set<Author> author);
 
     public void deleteFromStock(String isbn);
 

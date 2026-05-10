@@ -35,10 +35,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void registerNewBook(String isbn, String title, Set<Author> authors) {
-
+    public Book registerNewBook(String isbn, String title, Set<Author> authors) {
+        
+        Book newBook = new Book();
         try {
-            Book newBook = new Book();
             newBook.setIsbn(isbn);
             newBook.setTitle(title);
             newBook.setAuthors(authors);
