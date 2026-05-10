@@ -1,7 +1,6 @@
 package se.yrgo.spring.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jakarta.persistence.*;
 

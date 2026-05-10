@@ -1,8 +1,7 @@
 package se.yrgo.spring.dataaccess;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 
 import se.yrgo.spring.domain.*;
 

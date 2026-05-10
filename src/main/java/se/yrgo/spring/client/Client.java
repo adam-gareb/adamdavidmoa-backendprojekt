@@ -31,7 +31,7 @@ public class Client {
                         3. Låna en bok
                         4. Visa dina lån
                         5. Admin meny
-                        """);
+                        : """);
                 String choice = input.nextLine();
                 String email;
                 String password;
@@ -61,7 +61,7 @@ public class Client {
                         System.out.println("Added user: " + user.findUserByEmail(email));
                     }
                     case "2" -> {
-                        System.out.println("Skriv in din mail:");
+                        System.out.printf("Skriv in din mail: ");
                         String emailChoice = input.nextLine();
                         while (!choice.equals("5")) {
                             User theUser = user.findUserByEmail(emailChoice);
@@ -71,34 +71,34 @@ public class Client {
                                     3. Ändra namn
                                     4. Ändra postadress
                                     5. Tillbaka
-                                    """);
+                                    : """);
                             choice = input.nextLine();
 
                             switch (choice) {
                                 case "1" -> {
-                                    System.out.println("Skriv din nya mail:");
+                                    System.out.print("Skriv din nya mail: ");
                                     String newMail = input.nextLine();
                                     theUser.setEmail(newMail);
                                 }
                                 case "2" -> {
-                                    System.out.println("Skriv in ditt nya lösenord:");
+                                    System.out.print("Skriv in ditt nya lösenord: ");
                                     String newPassword = input.nextLine();
                                     theUser.setPassword(newPassword);
                                 }
                                 case "3" -> {
-                                    System.out.println("Skriv ditt nya förnamn:");
+                                    System.out.print("Skriv ditt nya förnamn: ");
                                     String newFirstName = input.nextLine();
-                                    System.out.println("Skriv ditt nya efternamn:");
+                                    System.out.print("Skriv ditt nya efternamn: ");
                                     String newLastName = input.nextLine();
                                     theUser.setFirstName(newFirstName);
                                     theUser.setLastName(newLastName);
                                 }
                                 case "4" -> {
-                                    System.out.println("Skriv din nya adress:");
+                                    System.out.print("Skriv din nya adress: ");
                                     String newAddress = input.nextLine();
-                                    System.out.println("Skriv ditt nya postnummer:");
+                                    System.out.print("Skriv ditt nya postnummer: ");
                                     String newZip = input.nextLine();
-                                    System.out.println("Skriv din nya stad:");
+                                    System.out.print("Skriv din nya stad: ");
                                     String newCity = input.nextLine();
                                     theUser.setAdress(newAddress);
                                     theUser.setZip(newZip);

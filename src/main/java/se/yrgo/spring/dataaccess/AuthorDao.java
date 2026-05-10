@@ -1,6 +1,6 @@
 package se.yrgo.spring.dataaccess;
 
-import java.util.List;
+import java.util.*;
 
 import se.yrgo.spring.domain.Author;
 
