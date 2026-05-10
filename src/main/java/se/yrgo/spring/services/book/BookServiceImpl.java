@@ -35,10 +35,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void registerNewBook(String isbn, String title, Author author) {
+    public void registerNewBook(String isbn, String title, Set<Author> authors) {
 
         try {
-            Book newBook = new Book(isbn, title, author);
+            Book newBook = new Book();
+            newBook.setIsbn(isbn);
+            newBook.setTitle(title);
+            newBook.setAuthors(authors);
 
             dao.registerNewBook(newBook);
         } catch (Exception ex) {
