@@ -148,7 +148,7 @@ public class Client {
                                 //if satsen verkar inte fungera som den ska?
                                 if (aBook.isAvailable()) {
                                     System.out.println("-------------");
-                                    System.out.println(aBook.toString() + "-------------");
+                                    System.out.println(aBook.toString());
                                 }
                             }
                             choice = input.nextLine();
