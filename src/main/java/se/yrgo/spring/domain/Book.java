@@ -103,7 +103,6 @@ public class Book {
         return String.format("""
                 Book isbn: %s
                 Book title: %s
-                Author: %s
                 Author ID: %s
                 """, isbn, title, authorNames, authorId);
     }
