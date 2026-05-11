@@ -18,6 +18,7 @@ public class Book {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Author> authors;
 
+    @Column(nullable = false)
     private boolean available = true;
 
     public Book() {
