@@ -209,11 +209,11 @@ public class Client {
                                         2. Hantera böcker
                                         3. Hantera lån
                                         4. Hantera författare
-                                        4. Tillbaka
+                                        5. Tillbaka
                                         """);
 
-                                String adminChoice = input.nextLine();
-                                switch (adminChoice) {
+                                choice = input.nextLine();
+                                switch (choice) {
                                     case "1" -> {
                                         System.out.println("Användare");
                                         System.out.printf("""
@@ -221,8 +221,8 @@ public class Client {
                                                 2. Uppdatera användare
                                                 3. Ta bort användare
                                                 """);
-                                        String userChoice = input.nextLine();
-                                        switch (userChoice) {
+                                        choice = input.nextLine();
+                                        switch (choice) {
                                             case "1" -> {
                                                 for (User u : user.getAllUsers()) {
                                                     System.out.println("ID: " + u.getUserId());
@@ -309,8 +309,8 @@ public class Client {
                                                 2. Lägg till bok
                                                 3. Ta bort bok
                                                 """);
-                                        String bookChoice = input.nextLine();
-                                        switch (bookChoice) {
+                                        choice = input.nextLine();
+                                        switch (choice) {
                                             case "1" -> {
                                                 List<Book> books = book.getEntireCatalogue();
                                                 books.forEach(System.out::println);
@@ -353,8 +353,8 @@ public class Client {
                                                 2. Ta bort lån
                                                 3. Uppdatera lån
                                                 """);
-                                        String loanChoice = input.nextLine();
-                                        switch (loanChoice) {
+                                        choice = input.nextLine();
+                                        switch (choice) {
                                             case "1" -> {
                                                 List<Loan> loans = loan.getAllLoans();
 
@@ -383,15 +383,15 @@ public class Client {
                                         }
                                     }
                                     case "4" -> {
-                                        while (true) {
+                                        while (!choice.equals("3")) {
                                             System.out.println("Författare");
                                             System.out.printf("""
                                                     1. Visa alla författare
                                                     2. Lägg till författare
                                                     3. Tillbaka
                                                     """);
-                                            String authorChoice = input.nextLine();
-                                            switch (authorChoice) {
+                                            choice = input.nextLine();
+                                            switch (choice) {
                                                 case "1" -> {
                                                     List<Author> authors = author.getAllAuthors();
                                                     authors.forEach(System.out::println);
