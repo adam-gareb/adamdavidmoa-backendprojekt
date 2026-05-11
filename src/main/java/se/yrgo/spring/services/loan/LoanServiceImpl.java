@@ -40,13 +40,18 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void updateLoan(String loanId, Date dueDate) {
-        dao.updateLoan(loanId, dueDate);
+    public void updateLoan(String loanId) {
+        dao.updateLoan(loanId);
     }
 
     @Override
-    public Loan findLoanById(String loanId) {
-        return dao.findByUser(loanId);
+    public Loan findLoanByUserId(String userId) {
+        return dao.findByUser(userId);
+    }
+
+    @Override
+    public Loan findLoanById(String loanId){
+        return dao.findByLoanId(loanId);
     }
     
 }

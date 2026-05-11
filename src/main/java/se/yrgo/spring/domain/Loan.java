@@ -3,6 +3,7 @@ package se.yrgo.spring.domain;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
 
@@ -13,12 +14,12 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String loanId;
-    @ManyToMany // En loan kan ha många böcker, en bok kan finnas i många loans
+    @ManyToMany(fetch = FetchType.EAGER) // En loan kan ha många böcker, en bok kan finnas i många loans
     private Set<Book> books;
     private Date startDate;
     private Date dueDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     public Loan() {
@@ -74,12 +75,25 @@ public class Loan {
 
     @Override
     public String toString() {
+        String titles = books.stream()
+                .map(Book::getTitle)
+                .collect(Collectors.joining(", "));
+
         return String.format("""
-                User: %s
+                Loan ID: %s
+                User ID: %s
+                User: %s %s
                 Book(s) loaned: %s
-                Start date:
-                Due date:
-                """, user, books, startDate, dueDate);
+                Start date: %s
+                Due date: %s
+                """,
+                loanId,
+                user.getUserId(),
+                user.getFirstName(),
+                user.getLastName(),
+                titles,
+                startDate,
+                dueDate);
     }
 
 }

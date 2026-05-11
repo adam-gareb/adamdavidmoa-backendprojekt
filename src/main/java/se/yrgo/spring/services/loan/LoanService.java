@@ -15,7 +15,9 @@ public interface LoanService {
 
     public List<Loan> getAllLoans();
 
-    public void updateLoan(String loanId, Date dueDate);
+    public void updateLoan(String loanId);
+
+    public Loan findLoanByUserId(String userId);
 
     public Loan findLoanById(String loanId);
 }

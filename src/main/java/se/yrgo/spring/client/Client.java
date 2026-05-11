@@ -136,7 +136,7 @@ public class Client {
                         // Någon hantering av när man skrivit fel mail, eller mail som inte är
                         // registrerad med en användare?
 
-                        Loan newLoan;
+                        // Loan newLoan;
                         Set<Book> booksToLoan = new HashSet<>();
 
                         System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
@@ -170,7 +170,7 @@ public class Client {
                         Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
 
                         // kolla ifall isAvailable och setAvailable fungerar på rätt sätt
-                        newLoan = loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
+                        loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
 
                         for (Book unavailableBook : booksToLoan) {
                             unavailableBook.setAvailable(false);
@@ -354,21 +354,31 @@ public class Client {
                                         switch (loanChoice) {
                                             case "1" -> {
                                                 List<Loan> loans = loan.getAllLoans();
-                                                loans.forEach(System.out::println);
+
+                                                if (loans.isEmpty()) {
+                                                    System.out.println("Det finns inga lån.\n");
+                                                }
+                                                else{
+                                                    loans.forEach(System.out::println);
+                                                }
                                             }
                                             case "2" -> {
-                                                System.out.println("Ange användarens ID för att radera lån: ");
-                                                String userId = input.nextLine();
+                                                // System.out.println("Ange användarens ID för att radera lån: ");
+                                                System.out.println("Ange lånets ID för att radera lån:");
+                                                // String userId = input.nextLine();
+                                                String loanId = input.nextLine();
 
-                                                loan.removeLoan(userId);
+                                                loan.removeLoan(loanId);
+
+                                                System.out.println("Tog bort lån.\n");
                                             }
                                             case "3" -> {
-                                                System.out.println("Ange lånets ID för att uppdatera lån: ");
+                                                System.out.println("Ange lånets ID för att uppdatera lån:");
                                                 String loanId = input.nextLine();
 
                                                 Loan toUpdate = loan.findLoanById(loanId);
 
-                                                loan.updateLoan(toUpdate.getLoanId(), new Date());
+                                                loan.updateLoan(toUpdate.getLoanId());
                                             }
                                         }
                                     }
