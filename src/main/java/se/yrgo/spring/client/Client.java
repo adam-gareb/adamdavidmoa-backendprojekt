@@ -136,7 +136,6 @@ public class Client {
                         // Någon hantering av när man skrivit fel mail, eller mail som inte är
                         // registrerad med en användare?
 
-                        // Loan newLoan;
                         Set<Book> booksToLoan = new HashSet<>();
 
                         System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
@@ -174,6 +173,7 @@ public class Client {
 
                         for (Book unavailableBook : booksToLoan) {
                             unavailableBook.setAvailable(false);
+                            book.updateBook(unavailableBook);
                         }
 
                         if (!booksToLoan.isEmpty()) {

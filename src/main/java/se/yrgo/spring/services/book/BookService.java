@@ -17,4 +17,5 @@ public interface BookService {
 
     public void deleteFromStock(String isbn);
 
+    public void updateBook(Book book);
 }

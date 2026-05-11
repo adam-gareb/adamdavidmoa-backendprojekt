@@ -12,4 +12,5 @@ public interface BookDao {
     public void registerNewBook(Book newBook);
     public void delete(Book redundantBook);
     public List<Book> findBooksByAuthor(String author);
+    public void updateBook(Book book);
 }

@@ -36,7 +36,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book registerNewBook(String isbn, String title, Set<Author> authors) {
-        
+
         Book newBook = new Book();
         try {
             newBook.setIsbn(isbn);
@@ -48,7 +48,7 @@ public class BookServiceImpl implements BookService {
         } catch (Exception ex) {
             System.err.println("Something went wrong when registering book: " + ex.getMessage());
         }
-        
+
         return newBook;
     }
 
@@ -61,6 +61,11 @@ public class BookServiceImpl implements BookService {
         } catch (BookNotFoundException ex) {
             System.err.println("Something went wrong when searching for book: " + ex.getMessage());
         }
+    }
+
+    @Override
+    public void updateBook(Book book) {
+        dao.updateBook(book);
     }
 
 }

@@ -45,4 +45,8 @@ public class BookDaoJPAImpl implements BookDao {
                 .getResultList();
     }
 
+    @Override
+    public void updateBook(Book book) {
+        em.merge(book);
+    }
 }
