@@ -365,9 +365,7 @@ public class Client {
                                                 }
                                             }
                                             case "2" -> {
-                                                // System.out.println("Ange användarens ID för att radera lån: ");
                                                 System.out.println("Ange lånets ID för att radera lån:");
-                                                // String userId = input.nextLine();
                                                 String loanId = input.nextLine();
 
                                                 loan.removeLoan(loanId);
@@ -401,9 +399,9 @@ public class Client {
                                                 case "2" -> {
                                                     System.out.println("Lägg till författare.");
                                                     System.out.println("Namn: ");
-                                                    String auName = input.nextLine();
+                                                    String authorName = input.nextLine();
 
-                                                    author.addAuthor(idGenerator.generateUniqueId(ids), auName);
+                                                    author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
                                                 }
                                                 case "3" -> {
                                                     break;
