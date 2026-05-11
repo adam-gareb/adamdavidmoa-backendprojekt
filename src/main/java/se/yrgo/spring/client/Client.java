@@ -24,8 +24,10 @@ public class Client {
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
 
-            Author authorNumber1 = author.addAuthor(idGenerator.generateUniqueId(ids), "Author of 1");
-            Author authorNumber2 = author.addAuthor(idGenerator.generateUniqueId(ids), "Author of 2");
+            // Author authorNumber1 = author.addAuthor(idGenerator.generateUniqueId(ids),
+            // "Author of 1");
+            // Author authorNumber2 = author.addAuthor(idGenerator.generateUniqueId(ids),
+            // "Author of 2");
 
             while (true) {
                 Scanner input = new Scanner(System.in);
@@ -136,6 +138,7 @@ public class Client {
                         // Någon hantering av när man skrivit fel mail, eller mail som inte är
                         // registrerad med en användare?
 
+                        // Loan newLoan;
                         Set<Book> booksToLoan = new HashSet<>();
 
                         System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
@@ -144,7 +147,7 @@ public class Client {
                             System.out
                                     .println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
                             for (Book aBook : book.getEntireCatalogue()) {
-                                //if satsen verkar inte fungera som den ska?
+                                // if satsen verkar inte fungera som den ska?
                                 if (aBook.isAvailable()) {
                                     System.out.println("-------------");
                                     System.out.println(aBook.toString());
@@ -173,7 +176,6 @@ public class Client {
 
                         for (Book unavailableBook : booksToLoan) {
                             unavailableBook.setAvailable(false);
-                            book.updateBook(unavailableBook);
                         }
 
                         if (!booksToLoan.isEmpty()) {
@@ -206,6 +208,7 @@ public class Client {
                                         1. Hantera användare
                                         2. Hantera böcker
                                         3. Hantera lån
+                                        4. Hantera författare
                                         4. Tillbaka
                                         """);
 
@@ -357,8 +360,7 @@ public class Client {
 
                                                 if (loans.isEmpty()) {
                                                     System.out.println("Det finns inga lån.\n");
-                                                }
-                                                else{
+                                                } else {
                                                     loans.forEach(System.out::println);
                                                 }
                                             }
@@ -383,6 +385,33 @@ public class Client {
                                         }
                                     }
                                     case "4" -> {
+                                        while (true) {
+                                            System.out.println("Författare");
+                                            System.out.printf("""
+                                                    1. Visa alla författare
+                                                    2. Lägg till författare
+                                                    3. Tillbaka
+                                                    """);
+                                            String authorChoice = input.nextLine();
+                                            switch (authorChoice) {
+                                                case "1" -> {
+                                                    List<Author> authors = author.getAllAuthors();
+                                                    authors.forEach(System.out::println);
+                                                }
+                                                case "2" -> {
+                                                    System.out.println("Lägg till författare.");
+                                                    System.out.println("Namn: ");
+                                                    String auName = input.nextLine();
+
+                                                    author.addAuthor(idGenerator.generateUniqueId(ids), auName);
+                                                }
+                                                case "3" -> {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    case "5" -> {
                                         loggedIn = false;
                                     }
                                 }

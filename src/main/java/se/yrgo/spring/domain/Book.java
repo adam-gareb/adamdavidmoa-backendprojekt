@@ -96,11 +96,16 @@ public class Book {
                 .map(Author::getName)
                 .collect(Collectors.joining(", "));
 
+        String authorId = authors.stream()
+                .map(Author::getAuthorId)
+                .collect(Collectors.joining(", "));
+
         return String.format("""
                 Book isbn: %s
                 Book title: %s
                 Author: %s
-                """, isbn, title, authorNames);
+                Author ID: %s
+                """, isbn, title, authorNames, authorId);
     }
 
 }
