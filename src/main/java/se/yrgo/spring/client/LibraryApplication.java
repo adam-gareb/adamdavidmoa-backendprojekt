@@ -228,7 +228,6 @@ public class LibraryApplication {
         // Någon hantering av när man skrivit fel mail, eller mail som inte är
         // registrerad med en användare?
 
-        // Loan newLoan;
         Set<Book> booksToLoan = new HashSet<>();
 
         System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
@@ -261,7 +260,6 @@ public class LibraryApplication {
         Date startDate = new Date();
         Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
 
-        // kolla ifall isAvailable och setAvailable fungerar på rätt sätt
         loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
 
         for (Book unavailableBook : booksToLoan) {
@@ -339,6 +337,8 @@ public class LibraryApplication {
         }
     }
 
+    // Adam
+    // Created method manageAuthors to be able to show authors, add authors, and remove authors
     private static void manageAuthors(AuthorService author, Set<String> ids, UniqueIdGenerator idGenerator,
             Scanner input) {
         String choice;
