@@ -39,4 +39,11 @@ public class LibraryApplication {
         }
     }
 
+    private static void cursiveText(String x) {
+        System.out.println("\u001B[3m" + x + "\u001B[0m");
+    }
+
+    private static void cleanScreen() {
+        System.out.println("\033[H\033[2J");
+    }
 }
