@@ -88,8 +88,8 @@ public class LibraryApplication {
         }
     }
 
-    private static void enterMethod(Scanner input) {
-        System.out.println();
+    private static void enterMethod(Scanner input, String spacer) {
+        System.out.println(spacer.repeat(10));
         cursiveText("klicka ENTER för att fortsätta");
         input.nextLine();
     }
@@ -100,6 +100,10 @@ public class LibraryApplication {
 
     private static void cleanScreen() {
         System.out.println("\033[H\033[2J");
+    }
+
+    private static void spacer(String x) {
+        System.out.println(x.repeat(10));
     }
 
     private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) {
@@ -129,7 +133,7 @@ public class LibraryApplication {
                 zip, city);
         System.out
                 .println("Lade till användare: " + user.findUserByEmail(email));
-        enterMethod(input);
+        enterMethod(input, "");
     }
 
     // Adam
@@ -166,7 +170,7 @@ public class LibraryApplication {
                     cleanScreen();
                     theUser.setEmail(newMail);
                     System.out.printf("Din nya mail: %s%n", theUser.getEmail());
-                    enterMethod(input);
+                    enterMethod(input, "");
                 }
                 case "2" -> {
                     cleanScreen();
@@ -175,7 +179,7 @@ public class LibraryApplication {
                     cleanScreen();
                     theUser.setPassword(newPassword);
                     System.out.println("Ditt lösenord har ändrats");
-                    enterMethod(input);
+                    enterMethod(input, "");
                 }
                 case "3" -> {
                     cleanScreen();
@@ -187,7 +191,7 @@ public class LibraryApplication {
                     theUser.setFirstName(newFirstName);
                     theUser.setLastName(newLastName);
                     System.out.printf("Ditt nya namn: %s %s%n", theUser.getFirstName(), theUser.getLastName());
-                    enterMethod(input);
+                    enterMethod(input, "");
 
                 }
                 case "4" -> {
@@ -204,7 +208,7 @@ public class LibraryApplication {
                     theUser.setCity(newCity);
                     System.out.printf("Din nya adress: %s %s %s%n", theUser.getAdress(), theUser.getZip(),
                             theUser.getCity());
-                    enterMethod(input);
+                    enterMethod(input, "");
                 }
                 default ->
                     System.out.println("Något gick fel. Försök igen!");
@@ -224,7 +228,8 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created method createLoan, to be able to create a loan and put books into loan
+    // Created method createLoan, to be able to create a loan and put books into
+    // loan
     private static void createLoan(BookService book, UserService user, LoanService loan, Set<String> ids,
             UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         String choice;
@@ -263,7 +268,6 @@ public class LibraryApplication {
             }
         }
 
-        
         if (!booksToLoan.isEmpty()) {
             Date startDate = new Date();
             Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
@@ -278,7 +282,7 @@ public class LibraryApplication {
             System.out.println("Lån har skapats!");
             System.out.println("Följande böcker har blivit utlånade:");
             booksToLoan.forEach(System.out::println);
-            enterMethod(input);
+            enterMethod(input, "");
         }
     }
 
@@ -312,6 +316,7 @@ public class LibraryApplication {
                 cleanScreen();
                 System.out.println("ADMIN");
                 while (loggedIn) {
+                    cleanScreen();
                     System.out.printf("""
                             1. Hantera användare
                             2. Hantera böcker
@@ -393,7 +398,6 @@ public class LibraryApplication {
                 case "0" -> {
                     authorMenu = false;
                 }
-
                 default -> {
                     System.out.println("Någonting gick fel...");
                 }
@@ -468,10 +472,16 @@ public class LibraryApplication {
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
+                    cleanScreen();
                     List<Book> books = book.getEntireCatalogue();
                     books.forEach(System.out::println);
+                    enterMethod(input, "-");
+                    System.out.println();
+                    input.nextLine();
                 }
                 case "2" -> {
+                    cleanScreen();
+
                     System.out.print("ISBN: ");
                     String isbn = input.nextLine();
 
@@ -495,9 +505,15 @@ public class LibraryApplication {
 
                 }
                 case "3" -> {
+                    cleanScreen();
+                    List<Book> books = book.getEntireCatalogue();
+                    books.forEach(System.out::println);
                     System.out.println("Ange bokens ISBN för att radera: ");
+                    cursiveText("0 för att avbryta");
                     String isbn = input.nextLine();
-
+                    if (isbn.equals("0")) {
+                        break;
+                    }
                     book.deleteFromStock(isbn);
                 }
                 case "0" -> {
@@ -505,7 +521,7 @@ public class LibraryApplication {
                 }
 
                 default -> {
-                    System.out.println("Någonting gick fel...");
+                    System.out.println("Något gick fel. Försök igen!");
                 }
 
             }
@@ -537,9 +553,10 @@ public class LibraryApplication {
                 }
                 case "2" -> {
                     System.out.println("Skriv in användarens ID för uppdatering: ");
-                    cursiveText("0 för att gå tillbaka");
+                    cursiveText("0 för att avbryta");
                     String id = input.nextLine();
                     if (id.equals("0")) {
+                        cleanScreen();
                         break;
                     }
                     User theUser = user.findUserById(id);
@@ -565,16 +582,19 @@ public class LibraryApplication {
 
                         switch (choice) {
                             case "1" -> {
+                                cleanScreen();
                                 System.out.println("Skriv ny mail:");
                                 String newMail = input.nextLine();
                                 theUser.setEmail(newMail);
                             }
                             case "2" -> {
+                                cleanScreen();
                                 System.out.println("Skriv in nytt lösenord:");
                                 String newPassword = input.nextLine();
                                 theUser.setPassword(newPassword);
                             }
                             case "3" -> {
+                                cleanScreen();
                                 System.out.println("Skriv nytt förnamn:");
                                 String newFirstName = input.nextLine();
                                 System.out.println("Skriv nytt efternamn:");
@@ -583,6 +603,7 @@ public class LibraryApplication {
                                 theUser.setLastName(newLastName);
                             }
                             case "4" -> {
+                                cleanScreen();
                                 System.out.println("Skriv ny adress:");
                                 String newAddress = input.nextLine();
                                 System.out.println("Skriv nytt postnummer:");
@@ -615,8 +636,10 @@ public class LibraryApplication {
                 }
                 case "3" -> {
                     System.out.println("Ange användarens ID för att radera: ");
+                    cursiveText("0 för att avbryta");
                     String id = input.nextLine();
                     if (id.equals("0")) {
+                        cleanScreen();
                         break;
                     }
                     user.deleteUser(id);
@@ -624,9 +647,8 @@ public class LibraryApplication {
                 case "0" -> {
                     userMenu = false;
                 }
-
                 default -> {
-                    System.out.println("Någonting gick fel...");
+                    System.out.println("Något gick fel. Försök igen!");
                 }
             }
         }
