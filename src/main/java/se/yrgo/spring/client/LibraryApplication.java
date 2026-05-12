@@ -469,7 +469,11 @@ public class LibraryApplication {
             switch (choice) {
                 case "1" -> {
                     List<Book> books = book.getEntireCatalogue();
-                    books.forEach(System.out::println);
+                    if (books.isEmpty()) {
+                        System.out.println("Det finns inga böcker i biblioteket för tillfället.");
+                    } else {
+                        books.forEach(System.out::println);
+                    }
                 }
                 case "2" -> {
                     System.out.print("ISBN: ");
@@ -497,8 +501,16 @@ public class LibraryApplication {
                 case "3" -> {
                     System.out.println("Ange bokens ISBN för att radera: ");
                     String isbn = input.nextLine();
+                    try {
+                        Book deletedBook = book.getBookByIsbn(isbn);
+                        book.deleteFromStock(isbn);
+                        System.out.println("Bok borttagen:");
+                        System.out.println("ISBN: " + isbn);
+                        System.out.println("Titel: " + deletedBook.getTitle() + "\n");
+                    } catch (BookNotFoundException ex) {
+                        System.out.println("Något gick fel vid hämtning av boken.");
+                    }
 
-                    book.deleteFromStock(isbn);
                 }
                 case "0" -> {
                     bookMenu = false;
