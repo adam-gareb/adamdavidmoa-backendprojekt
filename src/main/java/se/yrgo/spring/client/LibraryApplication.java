@@ -5,7 +5,11 @@ import java.util.*;
 import org.springframework.context.support.*;
 
 import se.yrgo.spring.dataaccess.BookNotFoundException;
-import se.yrgo.spring.domain.*;
+import se.yrgo.spring.dataaccess.UserNotFoundException;
+import se.yrgo.spring.domain.Author;
+import se.yrgo.spring.domain.Book;
+import se.yrgo.spring.domain.Loan;
+import se.yrgo.spring.domain.User;
 import se.yrgo.spring.misc.*;
 import se.yrgo.spring.services.author.*;
 import se.yrgo.spring.services.book.*;
@@ -102,8 +106,9 @@ public class LibraryApplication {
     private static void spacer(String x) {
         System.out.println(x.repeat(10));
     }
-
-    private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) {
+    
+    private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
+            throws UserNotFoundException {
         String email;
         String password;
         String firstName;
@@ -137,10 +142,11 @@ public class LibraryApplication {
     // Created the method editUser, where you can change mail, password, name,
     // address, zip,
     // and city for a specific user
-    private static void editUser(UserService user, Scanner input, String choice) {
+    private static void editUser(UserService user, Scanner input, String choice) throws UserNotFoundException {
         System.out.printf("Skriv in din mail: ");
         String emailChoice = input.nextLine();
         User theUser = user.findUserByEmail(emailChoice);
+
         while (!choice.equals("0")) {
             cleanScreen();
             System.out.printf("""
@@ -231,7 +237,16 @@ public class LibraryApplication {
             UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         String choice;
         System.out.print("Skriv in din mail: ");
-        User theUser = user.findUserByEmail(input.nextLine());
+        User theUser = null;
+
+        while (theUser == null) {
+            try {
+                theUser = user.findUserByEmail(input.nextLine());
+            } catch (UserNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Försök igen: ");
+            }
+        }
 
         // Någon hantering av när man skrivit fel mail, eller mail som inte är
         // registrerad med en användare?
@@ -244,7 +259,6 @@ public class LibraryApplication {
             System.out
                     .println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
             for (Book aBook : book.getEntireCatalogue()) {
-                // if satsen verkar inte fungera som den ska?
                 if (aBook.isAvailable()) {
                     System.out.println("-------------");
                     System.out.println(aBook.toString());
@@ -283,9 +297,19 @@ public class LibraryApplication {
         }
     }
 
-    private static void showLoans(UserService user, Scanner input) {
+    private static void showLoans(UserService user, Scanner input) throws UserNotFoundException {
         System.out.print("Skriv in din mail: ");
-        User theUser = user.findUserByEmail(input.nextLine());
+        User theUser = null;
+
+        while (theUser == null) {
+            try {
+                theUser = user.findUserByEmail(input.nextLine());
+            } catch (UserNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.out.print("Försök igen: ");
+            }
+        }
+
         List<Loan> loans = theUser.getLoans();
         loans.forEach(System.out::println);
         System.out.print("Skriv 0 för att avsluta: ");
@@ -363,18 +387,21 @@ public class LibraryApplication {
         boolean authorMenu = true;
         System.out.println("Författare");
         while (authorMenu) {
+            List<Author> authors = author.getAllAuthors();
+            if (authors.isEmpty()) {
+                System.out.println("Det finns inga författare för tillfället.");
+            } else {
+                authors.forEach(System.out::println);
+                spacer("-");
+            }
+
             System.out.printf("""
-                    1. Visa alla författare
-                    2. Lägg till författare
-                    3. Ta bort författare
+                    1. Lägg till författare
+                    2. Ta bort författare
                     0. Tillbaka
                     """);
             choice = input.nextLine();
             switch (choice) {
-                case "1" -> {
-                    List<Author> authors = author.getAllAuthors();
-                    authors.forEach(System.out::println);
-                }
                 case "2" -> {
                     System.out.println("Lägg till författare.");
                     System.out.println("Namn: ");
@@ -410,24 +437,21 @@ public class LibraryApplication {
         boolean loanMenu = true;
         System.out.println("Lån");
         while (loanMenu) {
+            List<Loan> loans = loan.getAllLoans();
+            if (loans.isEmpty()){
+                System.out.println("Det finns inga lån för tillfället.");
+            }else{
+                loans.forEach(System.out::println);
+                spacer("-");
+            }
             System.out.printf("""
-                    1. Visa alla lån
-                    2. Ta bort lån
-                    3. Uppdatera lån
+                    1. Ta bort lån
+                    2. Uppdatera lån
                     0. Tillbaka
                     """);
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
-                    List<Loan> loans = loan.getAllLoans();
-
-                    if (loans.isEmpty()) {
-                        System.out.println("Det finns inga lån.\n");
-                    } else {
-                        loans.forEach(System.out::println);
-                    }
-                }
-                case "2" -> {
                     System.out.println("Ange lånets ID för att radera lån:");
                     String loanId = input.nextLine();
 
@@ -435,7 +459,7 @@ public class LibraryApplication {
 
                     System.out.println("Lån borttaget.\n");
                 }
-                case "3" -> {
+                case "2" -> {
                     System.out.println("Ange lånets ID för att uppdatera lån:");
                     String loanId = input.nextLine();
 
@@ -536,31 +560,17 @@ public class LibraryApplication {
         boolean userMenu = true;
         System.out.println("Användare");
         while (userMenu) {
+            List<User> users = user.getAllUsers();
+            users.forEach(System.out::println);
+            spacer("-");
             System.out.printf("""
-                    1. Visa alla användare
-                    2. Uppdatera användare
-                    3. Ta bort användare
+                    1. Uppdatera användare
+                    2. Ta bort användare
                     0. Tillbaka
                     """);
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
-                    cleanScreen();
-                    List<User> users = user.getAllUsers();
-                    if (users.isEmpty()) {
-                        System.out.println("Det finns inga användare för tillfället.");
-                    } else {
-
-                        for (User u : users) {
-                            System.out.println("ID: " + u.getUserId());
-                            System.out.println(
-                                    "Namn: " + u.getFirstName() + " " + u.getLastName());
-                            System.out.println("Email: " + u.getEmail());
-                            System.out.println("-------------------");
-                        }
-                    }
-                }
-                case "2" -> {
                     System.out.println("Skriv in användarens ID för uppdatering: ");
                     cursiveText("0 för att avbryta");
                     String id = input.nextLine();
@@ -643,7 +653,7 @@ public class LibraryApplication {
                     User testUser = user.findUserById(theUser.getUserId());
                     System.out.println(testUser.toString());
                 }
-                case "3" -> {
+                case "2" -> {
                     System.out.println("Ange användarens ID för att radera: ");
                     cursiveText("0 för att avbryta");
                     String id = input.nextLine();

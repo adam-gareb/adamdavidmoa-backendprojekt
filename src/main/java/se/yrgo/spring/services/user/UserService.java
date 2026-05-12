@@ -2,6 +2,7 @@ package se.yrgo.spring.services.user;
 
 import java.util.*;
 
+import se.yrgo.spring.dataaccess.UserNotFoundException;
 import se.yrgo.spring.domain.*;
 
 // David
@@ -33,5 +34,5 @@ public interface UserService {
 
     public User findUserById(String userId);
 
-    public User findUserByEmail(String email);
+    public User findUserByEmail(String email) throws UserNotFoundException;
 }
