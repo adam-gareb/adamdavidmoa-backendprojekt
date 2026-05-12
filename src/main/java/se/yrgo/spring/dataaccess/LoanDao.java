@@ -2,6 +2,7 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.*;
 
+// Adam
 
 import se.yrgo.spring.domain.*;
 

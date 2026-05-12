@@ -10,6 +10,7 @@ import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
 
 // Adam
+
 @Repository
 public class AuthorDaoJPAImpl implements AuthorDao {
 
@@ -23,9 +24,6 @@ public class AuthorDaoJPAImpl implements AuthorDao {
 
     @Override
     public void delete(Author author) {
-        // Author theAuthor = em.merge(author);
-        // em.remove(theAuthor);
-
         Author theAuthor = em.find(Author.class, author.getId());
         if (theAuthor != null) {
             // Ta bort författaren från alla böckers ägande sida

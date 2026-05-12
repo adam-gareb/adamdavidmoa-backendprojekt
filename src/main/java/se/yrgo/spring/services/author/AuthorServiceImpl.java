@@ -8,6 +8,7 @@ import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // Adam
+
 @Service
 @Transactional
 public class AuthorServiceImpl implements AuthorService {

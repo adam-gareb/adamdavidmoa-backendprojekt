@@ -139,6 +139,9 @@ public class LibraryApplication {
         }
     }
 
+    // Adam
+    // Contributed with creating method manageAuthors, to be able to show all authors, add
+    // authors, and remove authors
     private static void manageAuthors(AuthorService author, Set<String> ids, UniqueIdGenerator idGenerator,
             Scanner input) {
         String choice;
@@ -178,6 +181,8 @@ public class LibraryApplication {
         }
     }
 
+    // Adam
+    // Contributed to creating method manageLoans
     private static void manageLoans(LoanService loan, Scanner input) {
         String choice;
         System.out.println("Lån");

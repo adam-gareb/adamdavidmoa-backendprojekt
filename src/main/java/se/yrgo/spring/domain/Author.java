@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.*;
 
 // Adam
+
 @Entity
 public class Author {
     @Id
@@ -19,12 +20,6 @@ public class Author {
 
     public Author() {
     }
-
-    // public Author(String authorId, String name, Set<Book> allBooks) {
-    // this.authorId = authorId;
-    // this.name = name;
-    // this.allBooks = allBooks;
-    // }
 
     public Author(String authorId, String name) {
         this.authorId = authorId;

@@ -5,6 +5,7 @@ import java.util.*;
 import se.yrgo.spring.domain.*;
 
 // David
+
 public interface UserService {
     public User addUser(String userId,
             String firstName,

@@ -5,6 +5,7 @@ import java.util.*;
 import jakarta.persistence.*;
 
 // David
+
 @Entity
 public class User {
     @Id
