@@ -106,7 +106,7 @@ public class LibraryApplication {
     private static void spacer(String x) {
         System.out.println(x.repeat(10));
     }
-    
+
     private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
             throws UserNotFoundException {
         String email;
@@ -255,6 +255,11 @@ public class LibraryApplication {
 
         System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
         while (true) {
+            if (booksToLoan.isEmpty()) {
+                    System.out.println("Verkar inte finnas böcker att låna...");
+                    enterMethod(input, "");
+                    break;
+            }
             System.out.println("Skriv ISBN på bok som du vill låna (skriv '0' när du är klar):");
             System.out
                     .println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
