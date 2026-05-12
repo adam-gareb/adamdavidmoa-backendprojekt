@@ -17,7 +17,7 @@ public class User {
     private String email;
     private String password;
 
-    private String adress;
+    private String address;
     private String zip;
     private String city;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
@@ -31,7 +31,7 @@ public class User {
             String lastName,
             String email,
             String password,
-            String adress,
+            String address,
             String zip,
             String city) {
         this.userId = userId;
@@ -39,7 +39,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.adress = adress;
+        this.address = address;
         this.zip = zip;
         this.city = city;
         this.loans = new ArrayList<>();
@@ -77,12 +77,12 @@ public class User {
         this.email = email;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getZip() {
@@ -122,14 +122,14 @@ public class User {
             String lastName,
             String email,
             String password,
-            String adress,
+            String address,
             String zip,
             String city) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setPassword(password);
-        setAdress(adress);
+        setAddress(address);
         setZip(zip);
         setCity(city);
     }
@@ -142,7 +142,7 @@ public class User {
                 Efternamn: %s
                 E-mail: %s
                 Adress: %s %s %s
-                """, userId, firstName, lastName, email, adress, zip, city);
+                """, userId, firstName, lastName, email, address, zip, city);
     }
 
 }

@@ -28,6 +28,7 @@ public class Book {
         this.isbn = isbn;
         this.title = title;
         this.authors = new HashSet<>();
+        this.available = true;
         addAuthor(author);
     }
 

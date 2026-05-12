@@ -22,9 +22,13 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public Book findByIsbn(String isbn) throws BookNotFoundException {
-        return em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
-                .setParameter("isbn", isbn)
-                .getSingleResult();
+        try {
+            return em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
+                    .setParameter("isbn", isbn)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new BookNotFoundException("Ingen bok med ISBN: " + isbn);
+        }
     }
 
     @Override

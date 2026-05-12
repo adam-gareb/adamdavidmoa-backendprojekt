@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
             user.setLastName(lastName);
             user.setEmail(email);
             user.setPassword(password);
-            user.setAdress(address);
+            user.setAddress(address);
             user.setZip(zip);
             user.setCity(city);
             dao.update(user); // nu har den rätt id → UPDATE
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(String userId) {
+    public User findUserById(String userId) throws UserNotFoundException {
         return dao.findUserById(userId);
     }
 
