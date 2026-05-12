@@ -564,7 +564,7 @@ public class LibraryApplication {
     private static void manageUsers(UserService user, Scanner input) {
         String choice;
         boolean userMenu = true;
-        System.out.println("Användare");
+        System.out.println("Användare:\n");
         while (userMenu) {
             List<User> users = user.getAllUsers();
             users.forEach(System.out::println);
