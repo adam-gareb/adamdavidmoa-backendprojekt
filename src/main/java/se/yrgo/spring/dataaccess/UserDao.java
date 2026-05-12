@@ -19,7 +19,7 @@ public interface UserDao {
 
     public List<User> findUserByLastName(String lastName);
 
-    public User findUserByEmail(String email);
+    public User findUserByEmail(String email) throws UserNotFoundException;
 
     public List<Loan> getAllUsersWithLoans();
 }
