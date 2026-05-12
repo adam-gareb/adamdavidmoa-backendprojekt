@@ -20,7 +20,7 @@ public class User {
     private String adress;
     private String zip;
     private String city;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Loan> loans;
 
     public User() {
