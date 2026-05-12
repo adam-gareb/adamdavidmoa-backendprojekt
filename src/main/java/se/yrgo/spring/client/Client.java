@@ -5,6 +5,10 @@ public class Client {
 
         LibraryApplication app = new LibraryApplication();
 
-        app.runLibrary();
+        try {
+            app.runLibrary();
+        } catch (Exception ex) {
+            System.out.println("Something went wrong with running the application: " + ex.getMessage());
+        }
     }
 }

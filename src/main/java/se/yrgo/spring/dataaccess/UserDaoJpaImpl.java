@@ -37,10 +37,14 @@ public class UserDaoJpaImpl implements UserDao {
     }
 
     @Override
-    public User findUserById(String id) {
-        return em.createQuery("SELECT u FROM User u WHERE u.userId = :id", User.class)
-                .setParameter("id", id)
-                .getSingleResult();
+    public User findUserById(String id) throws UserNotFoundException {
+        try {
+            return em.createQuery("SELECT u FROM User u WHERE u.userId = :id", User.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new UserNotFoundException("Ingen användare hittades med mail: " + id);
+        }
     }
 
     @Override
