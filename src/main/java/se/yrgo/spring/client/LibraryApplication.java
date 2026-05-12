@@ -28,10 +28,10 @@ public class LibraryApplication {
 
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
+            Scanner input = new Scanner(System.in);
 
             while (true) {
                 cleanScreen();
-                Scanner input = new Scanner(System.in);
                 System.out.printf("""
                         Välkommen till biblioteket
                         1. Logga in/Skapa användare
