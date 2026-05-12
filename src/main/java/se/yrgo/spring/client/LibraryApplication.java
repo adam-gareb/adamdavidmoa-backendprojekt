@@ -498,7 +498,18 @@ public class LibraryApplication {
 
                     Set<Author> authors = new HashSet<>();
                     authors.add(author1);
-                    book.registerNewBook(isbn, title, authors);
+
+                    List<Book> books = book.getEntireCatalogue();
+                    boolean bookExists = books.stream()
+                            .anyMatch(b -> b.getIsbn().equals(isbn));
+
+                    if (bookExists) {
+                        System.out.println("Denna bok finns redan i systemet, ISBN: " + isbn);
+                    } else {
+                        book.registerNewBook(isbn, title, authors);
+                        System.out.println("Bok registrerad. \n ISBN: " + isbn + "\nTitel: " + title + "\nFöfattare: "
+                                + authorName);
+                    }
 
                 }
                 case "3" -> {
