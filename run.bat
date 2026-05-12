@@ -1,5 +1,4 @@
-#!/bin/bash
+@echo off
+call mvn clean compile
 
-mvn clean compile
-
-mvn exec:java "-Dexec.mainClass=se.yrgo.spring.client.Client"
+call mvn exec:java "-Dexec.mainClass=se.yrgo.spring.client.Client"
