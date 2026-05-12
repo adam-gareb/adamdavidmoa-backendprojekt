@@ -154,7 +154,7 @@ public class LibraryApplication {
                         Namn: %s %s
                         E-mail: %s
                         Adress: %s %s %s%n
-                    """, theUser.getFirstName(), theUser.getLastName(), theUser.getEmail(), theUser.getAdress(),
+                    """, theUser.getFirstName(), theUser.getLastName(), theUser.getEmail(), theUser.getAddress(),
                     theUser.getZip(), theUser.getCity());
             System.out.printf("""
                     1. Ändra mail
@@ -206,10 +206,10 @@ public class LibraryApplication {
                     System.out.print("Skriv din nya stad: ");
                     String newCity = input.nextLine();
                     cleanScreen();
-                    theUser.setAdress(newAddress);
+                    theUser.setAddress(newAddress);
                     theUser.setZip(newZip);
                     theUser.setCity(newCity);
-                    System.out.printf("Din nya adress: %s %s %s%n", theUser.getAdress(), theUser.getZip(),
+                    System.out.printf("Din nya adress: %s %s %s%n", theUser.getAddress(), theUser.getZip(),
                             theUser.getCity());
                     enterMethod(input, "");
                 }
@@ -221,7 +221,7 @@ public class LibraryApplication {
                     theUser.getLastName(),
                     theUser.getEmail(),
                     theUser.getPassword(),
-                    theUser.getAdress(),
+                    theUser.getAddress(),
                     theUser.getZip(),
                     theUser.getCity());
 
@@ -599,7 +599,7 @@ public class LibraryApplication {
                                     E-mail: %s
                                     Adress: %s %s %s%n
                                 """, theUser.getFirstName(), theUser.getLastName(), theUser.getEmail(),
-                                theUser.getAdress(),
+                                theUser.getAddress(),
                                 theUser.getZip(), theUser.getCity());
                         System.out.printf("""
                                 1. Ändra mail
@@ -640,7 +640,7 @@ public class LibraryApplication {
                                 String newZip = input.nextLine();
                                 System.out.println("Skriv ny stad:");
                                 String newCity = input.nextLine();
-                                theUser.setAdress(newAddress);
+                                theUser.setAddress(newAddress);
                                 theUser.setZip(newZip);
                                 theUser.setCity(newCity);
                             }
@@ -657,7 +657,7 @@ public class LibraryApplication {
                             theUser.getLastName(),
                             theUser.getEmail(),
                             theUser.getPassword(),
-                            theUser.getAdress(),
+                            theUser.getAddress(),
                             theUser.getZip(),
                             theUser.getCity());
 
