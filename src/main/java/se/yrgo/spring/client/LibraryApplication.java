@@ -143,6 +143,13 @@ public class LibraryApplication {
         while (!choice.equals("0")) {
             cleanScreen();
             System.out.printf("""
+                    Information:
+                        Namn: %s %s
+                        E-mail: %s
+                        Adress: %s %s %s%n
+                    """, theUser.getFirstName(), theUser.getLastName(), theUser.getEmail(), theUser.getAdress(),
+                    theUser.getZip(), theUser.getCity());
+            System.out.printf("""
                     1. Ändra mail
                     2. Ändra lösenord
                     3. Ändra namn
@@ -301,6 +308,7 @@ public class LibraryApplication {
             }
             if (userName.equals("admin") && passKey.equals("sa")) {
                 loggedIn = true;
+                cleanScreen();
                 System.out.println("ADMIN");
                 while (loggedIn) {
                     System.out.printf("""
@@ -314,15 +322,19 @@ public class LibraryApplication {
                     choice = input.nextLine();
                     switch (choice) {
                         case "1" -> {
+                            cleanScreen();
                             manageUsers(user, input);
                         }
                         case "2" -> {
+                            cleanScreen();
                             manageBooks(author, book, ids, idGenerator, input);
                         }
                         case "3" -> {
+                            cleanScreen();
                             manageLoans(loan, input);
                         }
                         case "4" -> {
+                            cleanScreen();
                             manageAuthors(author, ids, idGenerator, input);
                         }
                         case "0" -> {
@@ -510,6 +522,7 @@ public class LibraryApplication {
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
+                    cleanScreen();
                     for (User u : user.getAllUsers()) {
                         System.out.println("ID: " + u.getUserId());
                         System.out.println(
@@ -520,10 +533,23 @@ public class LibraryApplication {
                 }
                 case "2" -> {
                     System.out.println("Skriv in användarens ID för uppdatering: ");
+                    cursiveText("0 för att gå tillbaka");
                     String id = input.nextLine();
+                    if (id.equals("0")) {
+                        break;
+                    }
                     User theUser = user.findUserById(id);
 
                     while (!choice.equals("0")) {
+                        cleanScreen();
+                        System.out.printf("""
+                                Information:
+                                    Namn: %s %s
+                                    E-mail: %s
+                                    Adress: %s %s %s%n
+                                """, theUser.getFirstName(), theUser.getLastName(), theUser.getEmail(),
+                                theUser.getAdress(),
+                                theUser.getZip(), theUser.getCity());
                         System.out.printf("""
                                 1. Ändra mail
                                 2. Ändra lösenord
@@ -586,7 +612,9 @@ public class LibraryApplication {
                 case "3" -> {
                     System.out.println("Ange användarens ID för att radera: ");
                     String id = input.nextLine();
-
+                    if (id.equals("0")) {
+                        break;
+                    }
                     user.deleteUser(id);
                 }
                 case "0" -> {
