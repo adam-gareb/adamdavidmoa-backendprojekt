@@ -4,7 +4,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.dataaccess.LoanDao;
 import se.yrgo.spring.domain.*;
 
@@ -21,12 +21,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public Loan addLoan(String loanId, Set<Book> books, Date startDate, Date dueDate, User user) {
-        Loan loan = new Loan(loanId, books, startDate, dueDate, user);
-
-        dao.addLoan(loanId, books, startDate, dueDate, user);
-        
-        return loan;
+    public Loan addLoan(String loanId, Set<Book> books, Date startDate, Date dueDate, User user) {        
+        return dao.addLoan(loanId, books, startDate, dueDate, user);
     }
 
     @Override
