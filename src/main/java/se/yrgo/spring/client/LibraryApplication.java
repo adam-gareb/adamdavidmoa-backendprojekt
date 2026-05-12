@@ -338,7 +338,8 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created method manageAuthors to be able to show authors, add authors, and remove authors
+    // Created method manageAuthors to be able to show authors, add authors, and
+    // remove authors
     private static void manageAuthors(AuthorService author, Set<String> ids, UniqueIdGenerator idGenerator,
             Scanner input) {
         String choice;
@@ -416,7 +417,7 @@ public class LibraryApplication {
 
                     loan.removeLoan(loanId);
 
-                    System.out.println("Tog bort lån.\n");
+                    System.out.println("Lån borttaget.\n");
                 }
                 case "3" -> {
                     System.out.println("Ange lånets ID för att uppdatera lån:");
@@ -510,12 +511,19 @@ public class LibraryApplication {
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
-                    for (User u : user.getAllUsers()) {
-                        System.out.println("ID: " + u.getUserId());
-                        System.out.println(
-                                "Namn: " + u.getFirstName() + " " + u.getLastName());
-                        System.out.println("Email: " + u.getEmail());
-                        System.out.println("-------------------");
+                    List<User> users = user.getAllUsers();
+                    if (users.isEmpty()) {
+                        System.out.println("Det finns inga användare för tillfället.");
+                    } else {
+
+                        for (User u : users) {
+                            System.out.println("ID: " + u.getUserId());
+                            System.out.println(
+                                    "Namn: " + u.getFirstName() + " " + u.getLastName());
+                            System.out.println("Email: " + u.getEmail());
+                            System.out.println("-------------------");
+                        }
+
                     }
                 }
                 case "2" -> {
@@ -588,6 +596,7 @@ public class LibraryApplication {
                     String id = input.nextLine();
 
                     user.deleteUser(id);
+                    System.out.println("Användare borttagen.");
                 }
                 case "0" -> {
                     userMenu = false;
