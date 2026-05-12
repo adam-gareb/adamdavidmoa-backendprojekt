@@ -66,9 +66,18 @@ public class Author {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
+                    Author ID: %s
                     Author: %s
                     Books by author: %s
-                """, name, bookTitles);
+                """, authorId, name, bookTitles);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

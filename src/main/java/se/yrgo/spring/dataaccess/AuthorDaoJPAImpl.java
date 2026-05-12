@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.Author;
+import se.yrgo.spring.domain.Book;
 
 // Adam
 @Repository
@@ -22,8 +23,17 @@ public class AuthorDaoJPAImpl implements AuthorDao {
 
     @Override
     public void delete(Author author) {
-        Author theAuthor = em.merge(author);
-        em.remove(theAuthor);
+        // Author theAuthor = em.merge(author);
+        // em.remove(theAuthor);
+
+        Author theAuthor = em.find(Author.class, author.getId());
+        if (theAuthor != null) {
+            // Ta bort författaren från alla böckers ägande sida
+            for (Book book : theAuthor.getAllBooks()) {
+                book.getAuthors().remove(theAuthor);
+            }
+            em.remove(theAuthor);
+        }
     }
 
     @Override

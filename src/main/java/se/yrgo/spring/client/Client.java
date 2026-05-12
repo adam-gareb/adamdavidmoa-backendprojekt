@@ -383,12 +383,13 @@ public class Client {
                                         }
                                     }
                                     case "4" -> {
-                                        while (!choice.equals("3")) {
+                                        // while (!choice.equals("4")) {
                                             System.out.println("Författare");
                                             System.out.printf("""
                                                     1. Visa alla författare
                                                     2. Lägg till författare
-                                                    3. Tillbaka
+                                                    3. Ta bort författare
+                                                    4. Tillbaka
                                                     """);
                                             choice = input.nextLine();
                                             switch (choice) {
@@ -404,10 +405,20 @@ public class Client {
                                                     author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
                                                 }
                                                 case "3" -> {
-                                                    break;
+                                                    System.out.println("Skriv namn på författare du vill ta bort:");
+                                                    String authorName = input.nextLine();
+
+                                                    Author theAuthor = author.findAuthorByName(authorName);
+
+                                                    author.deleteAuthor(theAuthor);
+
+                                                    System.out.println("Tog bort " + authorName);
+                                                }
+                                                case "4" -> {
+                                                    System.out.println("");
                                                 }
                                             }
-                                        }
+                                        // }
                                     }
                                     case "5" -> {
                                         loggedIn = false;
