@@ -21,8 +21,9 @@ public class UserDaoJpaImpl implements UserDao {
     }
 
     @Override
-    public void create(User user) {
+    public User create(User user) {
         em.persist(user);
+        return user;
     }
 
     @Override
