@@ -5,10 +5,7 @@ import java.util.*;
 import org.springframework.context.support.*;
 
 import se.yrgo.spring.dataaccess.BookNotFoundException;
-import se.yrgo.spring.domain.Author;
-import se.yrgo.spring.domain.Book;
-import se.yrgo.spring.domain.Loan;
-import se.yrgo.spring.domain.User;
+import se.yrgo.spring.domain.*;
 import se.yrgo.spring.misc.*;
 import se.yrgo.spring.services.author.*;
 import se.yrgo.spring.services.book.*;
@@ -296,9 +293,9 @@ public class LibraryApplication {
     }
 
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
-            Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) {
+            Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         boolean loggedIn = false;
-        while (!loggedIn) {
+        while (true) {
             String choice = "";
             System.out.print("Skriv in ditt användarnamn: \n (0 för att gå tillbaka)\n:");
             String userName = input.nextLine();
@@ -458,7 +455,7 @@ public class LibraryApplication {
     }
 
     private static void manageBooks(AuthorService author, BookService book, Set<String> ids,
-            UniqueIdGenerator idGenerator, Scanner input) {
+            UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         String choice;
         boolean bookMenu = true;
         System.out.println("Böcker");
@@ -505,11 +502,17 @@ public class LibraryApplication {
                     cleanScreen();
                     List<Book> books = book.getEntireCatalogue();
                     books.forEach(System.out::println);
+                    spacer("-");
                     System.out.println("Ange bokens ISBN för att radera: ");
                     cursiveText("0 för att avbryta");
                     String isbn = input.nextLine();
-
+                    if (isbn.equals("0")) {
+                        break;
+                    }
+                    Book deletedBook = book.getBookByIsbn(isbn);
                     book.deleteFromStock(isbn);
+                    System.out.printf("Tog bort boken: %s %s", deletedBook.getTitle(), deletedBook.getIsbn());
+                    cleanScreen();
                 }
                 case "0" -> {
                     bookMenu = false;
