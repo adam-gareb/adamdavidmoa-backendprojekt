@@ -31,8 +31,7 @@ public class UserServiceImpl implements UserService {
             String city) {
         try {
             User user = new User(userId, firstName, lastName, email, password, address, zip, city);
-            dao.create(user);
-            return user;
+            return dao.create(user);
         } catch (Exception ex) {
             System.err.println("Something went wrong with adding a user: " + ex.getMessage());
             return null;
