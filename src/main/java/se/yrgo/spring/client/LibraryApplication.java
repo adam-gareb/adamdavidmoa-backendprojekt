@@ -229,7 +229,7 @@ public class LibraryApplication {
                     enterMethod(input, "");
                 }
                 default ->
-                    System.out.println("Något gick fel. Försök igen!");
+                    System.out.println("\nNågot gick fel. Försök igen!\n");
             }
             user.updateUser(theUser.getUserId(),
                     theUser.getFirstName(),
@@ -431,14 +431,14 @@ public class LibraryApplication {
                     """);
             choice = input.nextLine();
             switch (choice) {
-                case "2" -> {
+                case "1" -> {
                     System.out.println("Lägg till författare.");
                     System.out.println("Namn: ");
                     String authorName = input.nextLine();
 
                     author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
                 }
-                case "3" -> {
+                case "2" -> {
                     System.out.println("Skriv namn på författare du vill ta bort:");
                     String authorName = input.nextLine();
 
@@ -461,6 +461,8 @@ public class LibraryApplication {
 
     // Adam
     // Contributed to creating method manageLoans
+    // A method for the admin menu to handle loans. Includes updating and removing
+    // loans.
     private static void manageLoans(LoanService loan, Scanner input) {
         String choice;
         boolean loanMenu = true;
@@ -507,6 +509,8 @@ public class LibraryApplication {
         }
     }
 
+    // A method for the admin menu that handles books. Includes adding and removing
+    // books.
     private static void manageBooks(AuthorService author, BookService book, Set<String> ids,
             UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         String choice;
@@ -515,8 +519,12 @@ public class LibraryApplication {
             System.out.println("Böcker");
             spacer("-");
             List<Book> books = book.getEntireCatalogue();
-            books.forEach(System.out::println);
-            spacer("-");
+            if (books.isEmpty()) {
+                System.out.println("Det finns inga böcker för tillfället.");
+            } else {
+                books.forEach(System.out::println);
+                spacer("-");
+            }
             System.out.printf("""
                     1. Lägg till bok
                     2. Ta bort bok
@@ -555,10 +563,9 @@ public class LibraryApplication {
                         System.out.println("Denna bok finns redan i systemet, ISBN: " + isbn);
                     } else {
                         book.registerNewBook(isbn, title, authors);
-                        System.out.println("Bok registrerad. \n ISBN: " + isbn + "\nTitel: " + title + "\nFöfattare: "
-                                + authorName);
+                        System.out.println("\nBok registrerad.");
                     }
-                    cleanScreen();
+                    //cleanScreen();
                 }
                 case "2" -> {
                     System.out.println("Ange bokens ISBN för att radera: ");
@@ -577,21 +584,27 @@ public class LibraryApplication {
                 }
 
                 default -> {
-                    System.out.println("Något gick fel. Försök igen!");
+                    System.out.println("\nNågot gick fel. Försök igen!\n");
                 }
 
             }
         }
     }
 
+    // A method in the admin menu that handles users. Includes update and deletion
+    // of user.
     private static void manageUsers(UserService user, Scanner input) throws UserNotFoundException {
         String choice;
         boolean userMenu = true;
         System.out.println("Användare:\n");
         while (userMenu) {
             List<User> users = user.getAllUsers();
-            users.forEach(System.out::println);
-            spacer("-");
+            if (users.isEmpty()) {
+                System.out.println("Det finns inga användare för tillfället.");
+            } else {
+                users.forEach(System.out::println);
+                spacer("-");
+            }
             System.out.printf("""
                     1. Uppdatera användare
                     2. Ta bort användare
@@ -666,7 +679,7 @@ public class LibraryApplication {
                                 System.out.println("");
 
                             default ->
-                                System.out.println("Något gick fel. Försök igen!");
+                                System.out.println("\nNågot gick fel. Försök igen!\n");
                         }
                     }
 
@@ -690,14 +703,22 @@ public class LibraryApplication {
                         cleanScreen();
                         break;
                     }
-                    user.deleteUser(id);
-                    System.out.println("Användare borttagen.");
+                    List<User> existingUsers = user.getAllUsers();
+                    boolean userExists = existingUsers.stream()
+                            .anyMatch(b -> b.getUserId().equals(id));
+
+                    if (!userExists) {
+                        System.out.println("Nånting gick fel vid radering av användare med ID: " + id);
+                    } else {
+                        user.deleteUser(id);
+                        System.out.println("Användare borttagen.");
+                    }
                 }
                 case "0" -> {
                     userMenu = false;
                 }
                 default -> {
-                    System.out.println("Något gick fel. Försök igen!");
+                    System.out.println("\nNågot gick fel. Försök igen!\n");
                 }
             }
         }
