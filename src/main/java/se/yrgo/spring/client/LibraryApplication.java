@@ -226,7 +226,7 @@ public class LibraryApplication {
                     enterMethod(input, "");
                 }
                 default ->
-                    System.out.println("\nNågot gick fel. Försök igen!\n");
+                    System.out.println("Något gick fel. Försök igen!");
             }
             user.updateUser(theUser.getUserId(),
                     theUser.getFirstName(),
@@ -580,7 +580,7 @@ public class LibraryApplication {
                 }
 
                 default -> {
-                    System.out.println("\nNågot gick fel. Försök igen!\n");
+                    System.out.println("Något gick fel. Försök igen!");
                 }
 
             }
@@ -675,7 +675,7 @@ public class LibraryApplication {
                                 System.out.println("");
 
                             default ->
-                                System.out.println("\nNågot gick fel. Försök igen!\n");
+                                System.out.println("Något gick fel. Försök igen!");
                         }
                     }
 
@@ -714,7 +714,7 @@ public class LibraryApplication {
                     userMenu = false;
                 }
                 default -> {
-                    System.out.println("\nNågot gick fel. Försök igen!\n");
+                    System.out.println("Något gick fel. Försök igen!");
                 }
             }
         }

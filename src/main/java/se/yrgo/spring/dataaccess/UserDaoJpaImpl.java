@@ -37,13 +37,13 @@ public class UserDaoJpaImpl implements UserDao {
     }
 
     @Override
-    public User findUserById(String userId) throws UserNotFoundException {
+    public User findUserById(String id) throws UserNotFoundException {
         try {
-            return em.createQuery("SELECT u FROM User u WHERE u.userId = :userId", User.class)
-                    .setParameter("userId", userId)
+            return em.createQuery("SELECT u FROM User u WHERE u.userId = :id", User.class)
+                    .setParameter("id", id)
                     .getSingleResult();
         } catch (NoResultException e) {
-            throw new UserNotFoundException("Ingen användare hittades med ID: " + userId);
+            throw new UserNotFoundException("Ingen användare hittades med mail: " + id);
         }
     }
 
@@ -69,5 +69,7 @@ public class UserDaoJpaImpl implements UserDao {
     public List<Loan> getAllUsersWithLoans() {
         return em.createQuery("SELECT l FROM Loan l JOIN l.user u", Loan.class).getResultList();
     }
+
+    // Implementera join metoder också
 
 }

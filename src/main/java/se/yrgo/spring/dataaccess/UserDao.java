@@ -15,7 +15,7 @@ public interface UserDao {
 
     public void update(User user);
 
-    public User findUserById(String userId) throws UserNotFoundException;
+    public User findUserById(String id) throws UserNotFoundException;
 
     public List<User> findUserByLastName(String lastName);
 
