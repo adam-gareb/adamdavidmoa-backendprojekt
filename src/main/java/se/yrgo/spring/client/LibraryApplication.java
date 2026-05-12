@@ -29,7 +29,7 @@ public class LibraryApplication {
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
             loadAllIDs(author, user, loan, ids);
-
+            
             Scanner input = new Scanner(System.in);
 
             while (true) {
@@ -79,49 +79,46 @@ public class LibraryApplication {
 
     }
 
+    
     public void createMockData() {
         try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
             AuthorService author = container.getBean(AuthorService.class);
             BookService book = container.getBean(BookService.class);
             UserService user = container.getBean(UserService.class);
             LoanService loan = container.getBean(LoanService.class);
-
+            
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
         }
     }
-
+    
     // Loads all already existing IDs in the database
     private void loadAllIDs(AuthorService author, UserService user, LoanService loan, Set<String> ids) {
         user.getAllUsers().forEach(u -> ids.add(u.getUserId()));
         author.getAllAuthors().forEach(a -> ids.add(a.getAuthorId()));
         loan.getAllLoans().forEach(l -> ids.add(l.getLoanId()));
     }
-
-    // Makes the user need to press enter to continue
+    //Makes the user need to press enter to continue
     private static void enterMethod(Scanner input, String spacer) {
         System.out.println(spacer.repeat(10));
         cursiveText("klicka ENTER för att fortsätta");
         input.nextLine();
     }
-
-    // Makes the text cursive
+    //Makes the text cursive
     private static void cursiveText(String x) {
         System.out.println("\u001B[3m" + x + "\u001B[0m");
     }
-
-    // Clears the terminal screen
+    //Clears the terminal screen
     private static void cleanScreen() {
         System.out.println("\033[H\033[2J");
     }
-
-    // Creates a spacer in whatever String you want
+    //Creates a spacer in whatever String you want
     private static void spacer(String x) {
         System.out.println(x.repeat(10));
     }
 
-    // David
-    // A method to sign up as a user in the library, it adds a User to the database
+    //David
+    //A method to sign up as a user in the library, it adds a User to the database
     private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
             throws UserNotFoundException {
         String email;
@@ -323,8 +320,8 @@ public class LibraryApplication {
         }
     }
 
-    // David
-    // This method
+    //David
+    // This method 
     private static void showLoans(UserService user, Scanner input) throws UserNotFoundException {
         System.out.print("Skriv in din mail: ");
         User theUser = null;
@@ -345,8 +342,7 @@ public class LibraryApplication {
     }
 
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
-            Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
-            throws BookNotFoundException, UserNotFoundException {
+            Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException, UserNotFoundException {
         boolean loggedIn = false;
         while (true) {
             String choice = "";

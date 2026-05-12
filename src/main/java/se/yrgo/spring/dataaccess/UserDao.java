@@ -9,7 +9,7 @@ import se.yrgo.spring.domain.*;
 public interface UserDao {
     public List<User> getAllUsers();
 
-    public User create(User user);
+    public void create(User user);
 
     public void delete(User user);
 
