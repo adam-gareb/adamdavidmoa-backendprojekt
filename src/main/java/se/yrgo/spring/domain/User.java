@@ -118,26 +118,29 @@ public class User {
     }
 
     public void updateUser(
-        String firstName,
-        String lastName,
-        String email,
-        String password,
-        String adress,
-        String zip,
-        String city){
-            setFirstName(firstName);
-            setLastName(lastName);
-            setEmail(email);
-            setPassword(password);
-            setAdress(adress);
-            setZip(zip);
-            setCity(city);
-        }
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String adress,
+            String zip,
+            String city) {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        setPassword(password);
+        setAdress(adress);
+        setZip(zip);
+        setCity(city);
+    }
 
     @Override
     public String toString() {
-        return "User [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", adress=" + adress
-                + ", zip=" + zip + ", city=" + city + "]";
+        return String.format("""
+                Förnamn: %s
+                Efternamn: %s
+                E-mail: %s
+                Adress: %s %s %s""", firstName, lastName, email, adress, zip, city);
     }
 
 }

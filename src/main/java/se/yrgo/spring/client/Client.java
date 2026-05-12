@@ -6,7 +6,5 @@ public class Client {
         LibraryApplication app = new LibraryApplication();
 
         app.runLibrary();
-
     }
-
 }
