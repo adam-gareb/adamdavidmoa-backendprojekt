@@ -248,39 +248,45 @@ public class LibraryApplication {
             }
         }
 
-        // Någon hantering av när man skrivit fel mail, eller mail som inte är
-        // registrerad med en användare?
-
+        List<Book> availableBooks = book.getEntireCatalogue();
         Set<Book> booksToLoan = new HashSet<>();
 
         System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
         while (true) {
-            if (booksToLoan.isEmpty()) {
-                    System.out.println("Verkar inte finnas böcker att låna...");
-                    enterMethod(input, "");
-                    break;
+            if (availableBooks.isEmpty()) {
+                System.out.println("Verkar inte finnas böcker att låna...");
+                enterMethod(input, "");
+                break;
             }
-            System.out.println("Skriv ISBN på bok som du vill låna (skriv '0' när du är klar):");
-            System.out
-                    .println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
+
             for (Book aBook : book.getEntireCatalogue()) {
                 if (aBook.isAvailable()) {
                     System.out.println("-------------");
                     System.out.println(aBook.toString());
                 }
             }
+            System.out.println("Skriv ISBN på bok som du vill låna (skriv '0' när du är klar):");
+            System.out.println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
             choice = input.nextLine();
 
             if (choice.equals("0"))
                 break;
 
-            if (booksToLoan.contains(book.getBookByIsbn(choice))) {
-                booksToLoan.remove(book.getBookByIsbn(choice));
-                System.out
-                        .println("Tog bort " + book.getBookByIsbn(choice).getTitle() + " från lånet\n");
+            Book chosenBook;
+            try {
+                chosenBook = book.getBookByIsbn(choice);
+            } catch (BookNotFoundException e) {
+                System.out.println(e.getMessage());
+                System.out.println("Försök igen!");
+                continue;
+            }
+
+            if (booksToLoan.contains(chosenBook)) {
+                booksToLoan.remove(chosenBook);
+                System.out.println("Tog bort " + chosenBook.getTitle() + " från lånet\n");
             } else {
-                booksToLoan.add(book.getBookByIsbn(choice));
-                System.out.println(book.getBookByIsbn(choice).getTitle() + " lades till i lånet!\n");
+                booksToLoan.add(chosenBook);
+                System.out.println(chosenBook.getTitle() + " lades till i lånet!\n");
             }
         }
 
@@ -443,9 +449,9 @@ public class LibraryApplication {
         System.out.println("Lån");
         while (loanMenu) {
             List<Loan> loans = loan.getAllLoans();
-            if (loans.isEmpty()){
+            if (loans.isEmpty()) {
                 System.out.println("Det finns inga lån för tillfället.");
-            }else{
+            } else {
                 loans.forEach(System.out::println);
                 spacer("-");
             }
