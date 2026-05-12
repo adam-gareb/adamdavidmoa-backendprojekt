@@ -4,6 +4,9 @@ import java.security.*;
 import java.util.*;
 import java.util.stream.*;
 
+// David
+// This class is a Unique id generator that generates ids that are unique. 
+// It does so by checking in a Set of ids and if it already exists creates a new one.
 public class UniqueIdGenerator {
     private static final String ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom random = new SecureRandom();
