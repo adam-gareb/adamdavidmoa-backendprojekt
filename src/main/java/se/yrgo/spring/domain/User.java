@@ -137,7 +137,7 @@ public class User {
     @Override
     public String toString() {
         return String.format("""
-                ID: %S
+                ID: %s
                 Förnamn: %s
                 Efternamn: %s
                 E-mail: %s
