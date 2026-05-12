@@ -137,10 +137,12 @@ public class User {
     @Override
     public String toString() {
         return String.format("""
+                ID: %S
                 Förnamn: %s
                 Efternamn: %s
                 E-mail: %s
-                Adress: %s %s %s""", firstName, lastName, email, adress, zip, city);
+                Adress: %s %s %s
+                """, userId, firstName, lastName, email, adress, zip, city);
     }
 
 }
