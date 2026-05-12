@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import org.springframework.stereotype.*;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.*;
 
@@ -35,14 +36,14 @@ public class LoanDaoJPAImpl implements LoanDao {
     }
 
     @Override
-    public Loan findByLoanId(String loanId) {
-        Loan loan = em.createQuery(
-                "SELECT l FROM Loan l WHERE l.loanId = :loanId",
-                Loan.class)
-                .setParameter("loanId", loanId)
-                .getSingleResult();
-
-        return loan;
+    public Loan findByLoanId(String loanId) throws LoanNotFoundException {
+        try {
+            return em.createQuery("SELECT l FROM Loan l WHERE l.loanId = :loanId", Loan.class)
+                    .setParameter("loanId", loanId)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new LoanNotFoundException("Inget lån hittades med ID: " + loanId);
+        }
     }
 
     @Override
@@ -61,6 +62,11 @@ public class LoanDaoJPAImpl implements LoanDao {
                 Loan.class)
                 .setParameter("loanId", loanId)
                 .getSingleResult();
+
+        for (Book book : loan.getBooks()) {
+            book.setAvailable(true);
+            em.merge(book);
+        }
 
         em.remove(loan);
     }

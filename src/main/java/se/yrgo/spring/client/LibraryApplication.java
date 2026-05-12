@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.context.support.*;
 
 import se.yrgo.spring.dataaccess.BookNotFoundException;
+import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.dataaccess.UserNotFoundException;
 import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
@@ -346,7 +347,7 @@ public class LibraryApplication {
 
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
             Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
-            throws BookNotFoundException, UserNotFoundException {
+            throws BookNotFoundException, UserNotFoundException, LoanNotFoundException {
         boolean loggedIn = false;
         while (true) {
             String choice = "";
@@ -463,7 +464,7 @@ public class LibraryApplication {
     // Contributed to creating method manageLoans
     // A method for the admin menu to handle loans. Includes updating and removing
     // loans.
-    private static void manageLoans(LoanService loan, Scanner input) {
+    private static void manageLoans(LoanService loan, Scanner input) throws LoanNotFoundException {
         String choice;
         boolean loanMenu = true;
         System.out.println("Lån");
@@ -484,10 +485,19 @@ public class LibraryApplication {
             switch (choice) {
                 case "1" -> {
                     System.out.println("Ange lånets ID för att radera lån:");
-                    String loanId = input.nextLine();
+                    Loan foundLoan = null;
 
-                    loan.removeLoan(loanId);
+                    while (foundLoan == null) {
+                        try {
+                            String loanId = input.nextLine();
+                            foundLoan = loan.findLoanById(loanId);
+                        } catch (LoanNotFoundException e) {
+                            System.out.println(e.getMessage());
+                            System.out.print("Försök igen: ");
+                        }
+                    }
 
+                    loan.removeLoan(foundLoan.getLoanId());
                     System.out.println("Lån borttaget.\n");
                 }
                 case "2" -> {
@@ -565,7 +575,7 @@ public class LibraryApplication {
                         book.registerNewBook(isbn, title, authors);
                         System.out.println("\nBok registrerad.");
                     }
-                    //cleanScreen();
+                    // cleanScreen();
                 }
                 case "2" -> {
                     System.out.println("Ange bokens ISBN för att radera: ");

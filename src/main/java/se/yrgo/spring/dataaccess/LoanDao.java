@@ -12,7 +12,7 @@ public interface LoanDao {
 
     public Loan findByUser(String userId);
 
-    public Loan findByLoanId(String loanId);
+    public Loan findByLoanId(String loanId) throws LoanNotFoundException;
 
     public Loan addLoan(String loandId, Set<Book> books, Date startDate, Date dueDate, User user);
 
