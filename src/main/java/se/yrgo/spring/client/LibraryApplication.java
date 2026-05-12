@@ -217,8 +217,7 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created method createLoan, to be able to create a loan and put books into
-    // loan
+    // Created method createLoan, to be able to create a loan and put books into loan
     private static void createLoan(BookService book, UserService user, LoanService loan, Set<String> ids,
             UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         String choice;
@@ -257,18 +256,22 @@ public class LibraryApplication {
             }
         }
 
-        Date startDate = new Date();
-        Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
-
-        loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
-
-        for (Book unavailableBook : booksToLoan) {
-            unavailableBook.setAvailable(false);
-        }
-
+        
         if (!booksToLoan.isEmpty()) {
+            Date startDate = new Date();
+            Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
+
+            loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
+
+            for (Book unavailableBook : booksToLoan) {
+                unavailableBook.setAvailable(false);
+                book.updateBook(unavailableBook);
+            }
+
+            System.out.println("Lån har skapats!");
             System.out.println("Följande böcker har blivit utlånade:");
             booksToLoan.forEach(System.out::println);
+            enterMethod(input);
         }
     }
 
@@ -338,7 +341,8 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created method manageAuthors to be able to show authors, add authors, and remove authors
+    // Created method manageAuthors to be able to show authors, add authors, and
+    // remove authors
     private static void manageAuthors(AuthorService author, Set<String> ids, UniqueIdGenerator idGenerator,
             Scanner input) {
         String choice;
