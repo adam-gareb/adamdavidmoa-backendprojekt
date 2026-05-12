@@ -458,22 +458,20 @@ public class LibraryApplication {
             UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
         String choice;
         boolean bookMenu = true;
-        System.out.println("Böcker");
         while (bookMenu) {
+            System.out.println("Böcker");
+            spacer("-");
+            List<Book> books = book.getEntireCatalogue();
+            books.forEach(System.out::println);
+            spacer("-");
             System.out.printf("""
-                    1. Visa alla böcker
-                    2. Lägg till bok
-                    3. Ta bort bok
+                    1. Lägg till bok
+                    2. Ta bort bok
                     0. Tillbaka
                     """);
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
-                    cleanScreen();
-                    List<Book> books = book.getEntireCatalogue();
-                    books.forEach(System.out::println);
-                }
-                case "2" -> {
                     cleanScreen();
 
                     System.out.print("ISBN: ");
@@ -496,8 +494,8 @@ public class LibraryApplication {
                     Set<Author> authors = new HashSet<>();
                     authors.add(author1);
 
-                    List<Book> books = book.getEntireCatalogue();
-                    boolean bookExists = books.stream()
+                    List<Book> bookExistList = book.getEntireCatalogue();
+                    boolean bookExists = bookExistList.stream()
                             .anyMatch(b -> b.getIsbn().equals(isbn));
 
                     if (bookExists) {
@@ -507,13 +505,9 @@ public class LibraryApplication {
                         System.out.println("Bok registrerad. \n ISBN: " + isbn + "\nTitel: " + title + "\nFöfattare: "
                                 + authorName);
                     }
-
-                }
-                case "3" -> {
                     cleanScreen();
-                    List<Book> books = book.getEntireCatalogue();
-                    books.forEach(System.out::println);
-                    spacer("-");
+                }
+                case "2" -> {
                     System.out.println("Ange bokens ISBN för att radera: ");
                     cursiveText("0 för att avbryta");
                     String isbn = input.nextLine();
