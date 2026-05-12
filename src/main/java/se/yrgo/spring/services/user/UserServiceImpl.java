@@ -9,6 +9,7 @@ import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // David
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {

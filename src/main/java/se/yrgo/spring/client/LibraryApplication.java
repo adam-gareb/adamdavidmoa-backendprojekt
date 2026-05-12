@@ -32,7 +32,7 @@ public class LibraryApplication {
                 cleanScreen();
                 Scanner input = new Scanner(System.in);
                 System.out.printf("""
-                        Välkommen till biblioteket (använd 1, 2, 3 etc.. för att göra val)
+                        Välkommen till biblioteket
                         1. Logga in/Skapa användare
                         2. Redigera användare
                         3. Låna en bok
@@ -302,71 +302,70 @@ public class LibraryApplication {
                             5. Logga ut
                             """);
 
-                    choice = input.nextLine();
-                    switch (choice) {
-                        case "1" -> manageUsers(user, input);
-
-                        case "2" -> manageBooks(author, book, ids, idGenerator, input);
-
-                        case "3" -> manageLoans(loan, input);
-
-                        case "4" -> manageAuthors(author, ids, idGenerator, input);
-
-                        case "5" -> {
-                            loggedIn = false;
-                        }
-                        default -> {
-                            System.out.println("Någonting gick fel...");
-                        }
-                    }
-                }
-            } else {
-                System.out.println("Fel lösenord eller användarnamn, försök igen eller avsluta med 0");
                 choice = input.nextLine();
-                if (choice.equals("0")) {
-                    break;
+                switch (choice) {
+                    case "1" -> {
+                        manageUsers(user, input);
+                    }
+                    case "2" -> {
+                        manageBooks(author, book, ids, idGenerator, input);
+                    }
+                    case "3" -> {
+                        manageLoans(loan, input);
+                    }
+                    case "4" -> {
+                        manageAuthors(author, ids, idGenerator, input);
+                    }
+                    case "5" -> {
+                        loggedIn = false;
+                    }
                 }
             }
 
-            break;
         }
     }
 
     private static void manageAuthors(AuthorService author, Set<String> ids, UniqueIdGenerator idGenerator,
             Scanner input) {
         String choice;
+        boolean authorMenu = true;
         System.out.println("Författare");
-        System.out.printf("""
-                1. Visa alla författare
-                2. Lägg till författare
-                3. Ta bort författare
-                4. Tillbaka
-                """);
-        choice = input.nextLine();
-        switch (choice) {
-            case "1" -> {
-                List<Author> authors = author.getAllAuthors();
-                authors.forEach(System.out::println);
+        while (authorMenu) {
+            System.out.printf("""
+                    1. Visa alla författare
+                    2. Lägg till författare
+                    3. Ta bort författare
+                    4. Tillbaka
+                    """);
+            choice = input.nextLine();
+            switch (choice) {
+                case "1" -> {
+                    List<Author> authors = author.getAllAuthors();
+                    authors.forEach(System.out::println);
+                }
+                case "2" -> {
+                    System.out.println("Lägg till författare.");
+                    System.out.println("Namn: ");
+                    String authorName = input.nextLine();
+
+                    author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
+                }
+                case "3" -> {
+                    System.out.println("Skriv namn på författare du vill ta bort:");
+                    String authorName = input.nextLine();
+
+                    Author theAuthor = author.findAuthorByName(authorName);
+
+                    author.deleteAuthor(theAuthor);
+
+                    System.out.println("Tog bort " + authorName);
+                }
+                case "4" -> {
+                    authorMenu = false;
+                }
             }
-            case "2" -> {
-                System.out.println("Lägg till författare.");
-                System.out.println("Namn: ");
-                String authorName = input.nextLine();
-
-                author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
-            }
-            case "3" -> {
-                System.out.println("Skriv namn på författare du vill ta bort:");
-                String authorName = input.nextLine();
-
-                Author theAuthor = author.findAuthorByName(authorName);
-
-                author.deleteAuthor(theAuthor);
-
-                System.out.println("Tog bort " + authorName);
-            }
-            case "4" -> {
-                System.out.println("");
+            default -> {
+                System.out.println("Någonting gick fel...");
             }
             default -> {
                 System.out.println("Någonting gick fel...");
@@ -374,40 +373,52 @@ public class LibraryApplication {
         }
     }
 
+    // Adam
+    // Contributed to creating method manageLoans
     private static void manageLoans(LoanService loan, Scanner input) {
         String choice;
+        boolean loanMenu = true;
         System.out.println("Lån");
-        System.out.printf("""
-                1. Visa alla lån
-                2. Ta bort lån
-                3. Uppdatera lån
-                """);
-        choice = input.nextLine();
-        switch (choice) {
-            case "1" -> {
-                List<Loan> loans = loan.getAllLoans();
+        while (loanMenu) {
+            System.out.printf("""
+                    1. Visa alla lån
+                    2. Ta bort lån
+                    3. Uppdatera lån
+                    4. Tillbaka
+                    """);
+            choice = input.nextLine();
+            switch (choice) {
+                case "1" -> {
+                    List<Loan> loans = loan.getAllLoans();
 
-                if (loans.isEmpty()) {
-                    System.out.println("Det finns inga lån.\n");
-                } else {
-                    loans.forEach(System.out::println);
+                    if (loans.isEmpty()) {
+                        System.out.println("Det finns inga lån.\n");
+                    } else {
+                        loans.forEach(System.out::println);
+                    }
+                }
+                case "2" -> {
+                    System.out.println("Ange lånets ID för att radera lån:");
+                    String loanId = input.nextLine();
+
+                    loan.removeLoan(loanId);
+
+                    System.out.println("Tog bort lån.\n");
+                }
+                case "3" -> {
+                    System.out.println("Ange lånets ID för att uppdatera lån:");
+                    String loanId = input.nextLine();
+
+                    Loan toUpdate = loan.findLoanById(loanId);
+
+                    loan.updateLoan(toUpdate.getLoanId());
+                }
+                case "4" -> {
+                    loanMenu = false;
                 }
             }
-            case "2" -> {
-                System.out.println("Ange lånets ID för att radera lån:");
-                String loanId = input.nextLine();
-
-                loan.removeLoan(loanId);
-
-                System.out.println("Tog bort lån.\n");
-            }
-            case "3" -> {
-                System.out.println("Ange lånets ID för att uppdatera lån:");
-                String loanId = input.nextLine();
-
-                Loan toUpdate = loan.findLoanById(loanId);
-
-                loan.updateLoan(toUpdate.getLoanId());
+            default -> {
+                System.out.println("Någonting gick fel...");
             }
             default -> {
                 System.out.println("Någonting gick fel...");
@@ -418,46 +429,56 @@ public class LibraryApplication {
     private static void manageBooks(AuthorService author, BookService book, Set<String> ids,
             UniqueIdGenerator idGenerator, Scanner input) {
         String choice;
+        boolean bookMenu = true;
         System.out.println("Böcker");
-        System.out.printf("""
-                1. Visa alla böcker
-                2. Lägg till bok
-                3. Ta bort bok
-                """);
-        choice = input.nextLine();
-        switch (choice) {
-            case "1" -> {
-                List<Book> books = book.getEntireCatalogue();
-                books.forEach(System.out::println);
-            }
-            case "2" -> {
-                System.out.print("ISBN: ");
-                String isbn = input.nextLine();
-
-                System.out.print("Titel: ");
-                String title = input.nextLine();
-
-                System.out.print("Författare: ");
-                String authorName = input.nextLine();
-
-                Author author1;
-                try {
-                    author1 = author.findAuthorByName(authorName);
-                } catch (Exception ex) {
-                    author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
-                    author1 = author.findAuthorByName(authorName);
+        while (bookMenu) {
+            System.out.printf("""
+                    1. Visa alla böcker
+                    2. Lägg till bok
+                    3. Ta bort bok
+                    4. Tillbaka
+                    """);
+            choice = input.nextLine();
+            switch (choice) {
+                case "1" -> {
+                    List<Book> books = book.getEntireCatalogue();
+                    books.forEach(System.out::println);
                 }
+                case "2" -> {
+                    System.out.print("ISBN: ");
+                    String isbn = input.nextLine();
 
-                Set<Author> authors = new HashSet<>();
-                authors.add(author1);
-                book.registerNewBook(isbn, title, authors);
+                    System.out.print("Titel: ");
+                    String title = input.nextLine();
 
+                    System.out.print("Författare: ");
+                    String authorName = input.nextLine();
+
+                    Author author1;
+                    try {
+                        author1 = author.findAuthorByName(authorName);
+                    } catch (Exception ex) {
+                        author.addAuthor(idGenerator.generateUniqueId(ids), authorName);
+                        author1 = author.findAuthorByName(authorName);
+                    }
+
+                    Set<Author> authors = new HashSet<>();
+                    authors.add(author1);
+                    book.registerNewBook(isbn, title, authors);
+
+                }
+                case "3" -> {
+                    System.out.println("Ange bokens ISBN för att radera: ");
+                    String isbn = input.nextLine();
+
+                    book.deleteFromStock(isbn);
+                }
+                case "4" -> {
+                    bookMenu = false;
+                }
             }
-            case "3" -> {
-                System.out.println("Ange bokens ISBN för att radera: ");
-                String isbn = input.nextLine();
-
-                book.deleteFromStock(isbn);
+            default -> {
+                System.out.println("Någonting gick fel...");
             }
             default -> {
                 System.out.println("Någonting gick fel...");
@@ -467,94 +488,257 @@ public class LibraryApplication {
 
     private static void manageUsers(UserService user, Scanner input) {
         String choice;
+        boolean userMenu = true;
         System.out.println("Användare");
-        System.out.printf("""
-                1. Visa alla användare
-                2. Uppdatera användare
-                3. Ta bort användare
-                """);
-        choice = input.nextLine();
-        switch (choice) {
-            case "1" -> {
-                for (User u : user.getAllUsers()) {
-                    System.out.println("ID: " + u.getUserId());
-                    System.out.println(
-                            "Namn: " + u.getFirstName() + " " + u.getLastName());
-                    System.out.println("Email: " + u.getEmail());
-                    System.out.println("-------------------");
+        while (userMenu) {
+            System.out.printf("""
+                    1. Visa alla användare
+                    2. Uppdatera användare
+                    3. Ta bort användare
+                    4. Tillbaka
+                    """);
+            choice = input.nextLine();
+            switch (choice) {
+                case "1" -> {
+                    for (User u : user.getAllUsers()) {
+                        System.out.println("ID: " + u.getUserId());
+                        System.out.println(
+                                "Namn: " + u.getFirstName() + " " + u.getLastName());
+                        System.out.println("Email: " + u.getEmail());
+                        System.out.println("-------------------");
+                    }
                 }
-            }
-            case "2" -> {
-                System.out.println("Skriv in användarens ID för uppdatering: ");
-                String id = input.nextLine();
+                case "2" -> {
+                    System.out.println("Skriv in användarens ID för uppdatering: ");
+                    String id = input.nextLine();
 
-                User theUser = user.findUserById(id);
-                System.out.printf("""
-                        1. Ändra mail
-                        2. Ändra lösenord
-                        3. Ändra namn
-                        4. Ändra postadress
-                        5. Tillbaka
-                        """);
-                choice = input.nextLine();
+                    User theUser = user.findUserById(id);
+                    System.out.printf("""
+                            1. Ändra mail
+                            2. Ändra lösenord
+                            3. Ändra namn
+                            4. Ändra postadress
+                            5. Tillbaka
+                            """);
+                    choice = input.nextLine();
 
-                switch (choice) {
-                    case "1" -> {
-                        System.out.println("Skriv ny mail:");
-                        String newMail = input.nextLine();
-                        theUser.setEmail(newMail);
-                    }
-                    case "2" -> {
-                        System.out.println("Skriv in nytt lösenord:");
-                        String newPassword = input.nextLine();
-                        theUser.setPassword(newPassword);
-                    }
-                    case "3" -> {
-                        System.out.println("Skriv nytt förnamn:");
-                        String newFirstName = input.nextLine();
-                        System.out.println("Skriv nytt efternamn:");
-                        String newLastName = input.nextLine();
-                        theUser.setFirstName(newFirstName);
-                        theUser.setLastName(newLastName);
-                    }
-                    case "4" -> {
-                        System.out.println("Skriv ny adress:");
-                        String newAddress = input.nextLine();
-                        System.out.println("Skriv nytt postnummer:");
-                        String newZip = input.nextLine();
-                        System.out.println("Skriv ny stad:");
-                        String newCity = input.nextLine();
-                        theUser.setAdress(newAddress);
-                        theUser.setZip(newZip);
-                        theUser.setCity(newCity);
-                    }
-                    case "5" ->
-                        System.out.println("");
+                    switch (choice) {
+                        case "1" -> {
+                            System.out.println("Skriv ny mail:");
+                            String newMail = input.nextLine();
+                            theUser.setEmail(newMail);
+                        }
+                        case "2" -> {
+                            System.out.println("Skriv in nytt lösenord:");
+                            String newPassword = input.nextLine();
+                            theUser.setPassword(newPassword);
+                        }
+                        case "3" -> {
+                            System.out.println("Skriv nytt förnamn:");
+                            String newFirstName = input.nextLine();
+                            System.out.println("Skriv nytt efternamn:");
+                            String newLastName = input.nextLine();
+                            theUser.setFirstName(newFirstName);
+                            theUser.setLastName(newLastName);
+                        }
+                        case "4" -> {
+                            System.out.println("Skriv ny adress:");
+                            String newAddress = input.nextLine();
+                            System.out.println("Skriv nytt postnummer:");
+                            String newZip = input.nextLine();
+                            System.out.println("Skriv ny stad:");
+                            String newCity = input.nextLine();
+                            theUser.setAdress(newAddress);
+                            theUser.setZip(newZip);
+                            theUser.setCity(newCity);
+                        }
+                        case "5" ->
+                            System.out.println("");
 
-                    default ->
-                        System.out.println("Något gick fel. Försök igen!");
+                        default ->
+                            System.out.println("Något gick fel. Försök igen!");
+                    }
+                    user.updateUser(theUser.getUserId(),
+                            theUser.getFirstName(),
+                            theUser.getLastName(),
+                            theUser.getEmail(),
+                            theUser.getPassword(),
+                            theUser.getAdress(),
+                            theUser.getZip(),
+                            theUser.getCity());
+
+                    User testUser = user.findUserById(theUser.getUserId());
+                    System.out.println(testUser.toString());
                 }
-                user.updateUser(theUser.getUserId(),
-                        theUser.getFirstName(),
-                        theUser.getLastName(),
-                        theUser.getEmail(),
-                        theUser.getPassword(),
-                        theUser.getAdress(),
-                        theUser.getZip(),
-                        theUser.getCity());
+                case "3" -> {
+                    System.out.println("Ange användarens ID för att radera: ");
+                    String id = input.nextLine();
 
-                User testUser = user.findUserById(theUser.getUserId());
-                System.out.println(testUser.toString());
-            }
-            case "3" -> {
-                System.out.println("Ange användarens ID för att radera: ");
-                String id = input.nextLine();
-
-                user.deleteUser(id);
+                    user.deleteUser(id);
+                }
+                case "4" -> {
+                    userMenu = false;
+                }
             }
             default -> {
                 System.out.println("Någonting gick fel...");
+        }
+    }
+
+    private static void showLoans(UserService user, Scanner input) {
+        System.out.print("Skriv in din mail: ");
+        User theUser = user.findUserByEmail(input.nextLine());
+        List<Loan> loans = theUser.getLoans();
+        loans.forEach(System.out::println);
+        System.out.print("Skriv 0 för att avsluta: ");
+        input.nextLine();
+    }
+
+    // Adam
+    // Created method createLoan, to be able to create a loan and put books into loan
+    private static void createLoan(BookService book, UserService user, LoanService loan, Set<String> ids,
+            UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
+        String choice;
+        System.out.print("Skriv in din mail: ");
+        User theUser = user.findUserByEmail(input.nextLine());
+
+        // Någon hantering av när man skrivit fel mail, eller mail som inte är
+        // registrerad med en användare?
+
+        Set<Book> booksToLoan = new HashSet<>();
+
+        System.out.println("Hej " + theUser.getFirstName() + " " + theUser.getLastName() + "!");
+        while (true) {
+            System.out.println("Skriv ISBN på bok som du vill låna (skriv '0' när du är klar):");
+            System.out
+                    .println("(om du ångrar lån av en bok, skriv ISBN på den boken du ångrade dig på)");
+            for (Book aBook : book.getEntireCatalogue()) {
+                if (aBook.isAvailable()) {
+                    System.out.println("-------------");
+                    System.out.println(aBook.toString());
+                }
+            }
+            choice = input.nextLine();
+
+            if (choice.equals("0"))
+                break;
+
+            if (booksToLoan.contains(book.getBookByIsbn(choice))) {
+                booksToLoan.remove(book.getBookByIsbn(choice));
+                System.out
+                        .println("Tog bort " + book.getBookByIsbn(choice).getTitle() + " från lånet\n");
+            } else {
+                booksToLoan.add(book.getBookByIsbn(choice));
+                System.out.println(book.getBookByIsbn(choice).getTitle() + " lades till i lånet!\n");
             }
         }
+
+        Date startDate = new Date();
+        Date dueDate = new Date(startDate.getTime() + 14L * 24 * 60 * 60 * 1000);
+
+        loan.addLoan(idGenerator.generateUniqueId(ids), booksToLoan, startDate, dueDate, theUser);
+
+        for (Book unavailableBook : booksToLoan) {
+            unavailableBook.setAvailable(false);
+        }
+
+        if (!booksToLoan.isEmpty()) {
+            System.out.println("Följande böcker har blivit utlånade:");
+            booksToLoan.forEach(System.out::println);
+        }
+    }
+
+    // Adam
+    // Created the method editUser, where you can change mail, password, name, address, zip,
+    // and city for a specific user
+    private static void editUser(UserService user, Scanner input, String choice) {
+        System.out.printf("Skriv in din mail: ");
+        String emailChoice = input.nextLine();
+        while (!choice.equals("5")) {
+            User theUser = user.findUserByEmail(emailChoice);
+            System.out.printf("""
+                    1. Ändra mail
+                    2. Ändra lösenord
+                    3. Ändra namn
+                    4. Ändra postadress
+                    5. Tillbaka
+                    : """);
+            choice = input.nextLine();
+
+            switch (choice) {
+                case "1" -> {
+                    System.out.print("Skriv din nya mail: ");
+                    String newMail = input.nextLine();
+                    theUser.setEmail(newMail);
+                }
+                case "2" -> {
+                    System.out.print("Skriv in ditt nya lösenord: ");
+                    String newPassword = input.nextLine();
+                    theUser.setPassword(newPassword);
+                }
+                case "3" -> {
+                    System.out.print("Skriv ditt nya förnamn: ");
+                    String newFirstName = input.nextLine();
+                    System.out.print("Skriv ditt nya efternamn: ");
+                    String newLastName = input.nextLine();
+                    theUser.setFirstName(newFirstName);
+                    theUser.setLastName(newLastName);
+                }
+                case "4" -> {
+                    System.out.print("Skriv din nya adress: ");
+                    String newAddress = input.nextLine();
+                    System.out.print("Skriv ditt nya postnummer: ");
+                    String newZip = input.nextLine();
+                    System.out.print("Skriv din nya stad: ");
+                    String newCity = input.nextLine();
+                    theUser.setAdress(newAddress);
+                    theUser.setZip(newZip);
+                    theUser.setCity(newCity);
+                }
+                case "5" ->
+                    System.out.println("");
+
+                default ->
+                    System.out.println("Något gick fel. Försök igen!");
+            }
+            user.updateUser(theUser.getUserId(),
+                    theUser.getFirstName(),
+                    theUser.getLastName(),
+                    theUser.getEmail(),
+                    theUser.getPassword(),
+                    theUser.getAdress(),
+                    theUser.getZip(),
+                    theUser.getCity());
+
+            User testUser = user.findUserById(theUser.getUserId());
+            System.out.println(testUser.toString());
+        }
+    }
+
+    private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) {
+        String email;
+        String password;
+        String firstName;
+        String lastName;
+        String address;
+        String zip;
+        String city;
+        System.out.print("Skriv in din mail: ");
+        email = input.nextLine();
+        System.out.print("Skriv in ditt förnamn: ");
+        firstName = input.nextLine();
+        System.out.print("Skriv in ditt efternamn: ");
+        lastName = input.nextLine();
+        System.out.print("Skriv in din adress: ");
+        address = input.nextLine();
+        System.out.print("Skriv in din zipkod: ");
+        zip = input.nextLine();
+        System.out.print("Skriv in din stad: ");
+        city = input.nextLine();
+        System.out.print("Skriv in ett lösenord: ");
+        password = input.nextLine();
+        user.addUser(idGenerator.generateUniqueId(ids), firstName, lastName, email, password, address,
+                zip, city);
+        System.out.println("Added user: " + user.findUserByEmail(email));
     }
 }

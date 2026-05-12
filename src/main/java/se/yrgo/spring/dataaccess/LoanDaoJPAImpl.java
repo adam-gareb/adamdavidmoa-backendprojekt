@@ -10,6 +10,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.*;
 
+// Adam & Moa
+
 @Repository
 public class LoanDaoJPAImpl implements LoanDao {
 
@@ -71,8 +73,6 @@ public class LoanDaoJPAImpl implements LoanDao {
 
         Date newDueDate = new Date(loan.getDueDate().getTime() + 14L * 24 * 60 * 60 * 1000);
         loan.setDueDate(newDueDate);
-
-        // em.merge(loan);
     }
 
 }

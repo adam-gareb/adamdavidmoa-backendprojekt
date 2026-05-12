@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.*;
 
 // Adam
+
 @Entity
 public class Loan {
     @Id
