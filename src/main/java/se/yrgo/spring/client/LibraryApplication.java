@@ -84,18 +84,6 @@ public class LibraryApplication {
 
     }
 
-    public void createMockData() {
-        try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
-            AuthorService author = container.getBean(AuthorService.class);
-            BookService book = container.getBean(BookService.class);
-            UserService user = container.getBean(UserService.class);
-            LoanService loan = container.getBean(LoanService.class);
-
-            Set<String> ids = new HashSet<>();
-            UniqueIdGenerator idGenerator = new UniqueIdGenerator();
-        }
-    }
-
     // Loads all already existing IDs in the database
     private void loadAllIDs(AuthorService author, UserService user, LoanService loan, Set<String> ids) {
         user.getAllUsers().forEach(u -> ids.add(u.getUserId()));
