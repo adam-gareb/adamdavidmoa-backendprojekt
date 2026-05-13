@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.context.support.*;
 
+import se.yrgo.spring.dataaccess.AuthorNotFoundException;
 import se.yrgo.spring.dataaccess.BookNotFoundException;
 import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.dataaccess.UserNotFoundException;
@@ -359,7 +360,7 @@ public class LibraryApplication {
     // authors.
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
             Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
-            throws BookNotFoundException, UserNotFoundException, LoanNotFoundException {
+            throws BookNotFoundException, UserNotFoundException, LoanNotFoundException, AuthorNotFoundException {
         boolean loggedIn = false;
         while (true) {
             String choice = "";
@@ -424,7 +425,7 @@ public class LibraryApplication {
     // Created method manageAuthors to be able to show authors, add authors, and
     // remove authors
     private static void manageAuthors(AuthorService author, Set<String> ids, UniqueIdGenerator idGenerator,
-            Scanner input) {
+            Scanner input) throws AuthorNotFoundException {
         String choice;
         boolean authorMenu = true;
         System.out.println("Författare");
@@ -537,7 +538,7 @@ public class LibraryApplication {
     // A method for the admin menu that handles books. Includes adding and removing
     // books.
     private static void manageBooks(AuthorService author, BookService book, Set<String> ids,
-            UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException {
+            UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException, AuthorNotFoundException {
         String choice;
         boolean bookMenu = true;
         while (bookMenu) {

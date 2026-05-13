@@ -1,5 +1,6 @@
 package se.yrgo.spring.services.author;
 
+import se.yrgo.spring.dataaccess.AuthorNotFoundException;
 import se.yrgo.spring.domain.*;
 
 import java.util.*;
@@ -12,7 +13,7 @@ public interface AuthorService {
 
     public void deleteAuthor(Author deletedAuthor);
 
-    public Author findAuthorByName(String name);
+    public Author findAuthorByName(String name) throws AuthorNotFoundException;
 
     public List<Author> getAllAuthors();
 }

@@ -9,6 +9,6 @@ import se.yrgo.spring.domain.Author;
 public interface AuthorDao {
     public void create(Author author);
     public void delete(Author author);
-    public Author findByName(String name);
+    public Author findByName(String name) throws AuthorNotFoundException;
     public List<Author> getAllAuthors();
 }
