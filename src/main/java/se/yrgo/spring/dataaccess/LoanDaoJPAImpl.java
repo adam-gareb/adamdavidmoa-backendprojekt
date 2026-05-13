@@ -2,8 +2,6 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.*;
 
-import java.time.LocalDate;
-
 import org.springframework.stereotype.*;
 
 import jakarta.persistence.EntityManager;

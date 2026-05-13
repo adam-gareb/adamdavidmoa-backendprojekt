@@ -1,9 +1,9 @@
 package se.yrgo.spring.dataaccess;
 
-import org.hsqldb.persist.RowInsertInterface.modes;
-
+// Adam
+// An exception for handling if you cannot find a Loan in the log file
 public class LoanNotFoundException extends Exception {
-    public LoanNotFoundException(String message){
+    public LoanNotFoundException(String message) {
         super(message);
     }
 }
