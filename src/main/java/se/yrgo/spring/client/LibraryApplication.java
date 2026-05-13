@@ -154,8 +154,7 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created the method editUser, where you can change mail, password, name,
-    // address, zip,
+    // Created the method editUser, where you can change mail, password, name, address, zip,
     // and city for a specific user
     private static void editUser(UserService user, Scanner input, String choice) throws UserNotFoundException {
         System.out.printf("Skriv in din mail: ");
