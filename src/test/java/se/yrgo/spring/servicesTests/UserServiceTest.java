@@ -9,5 +9,5 @@ import org.springframework.transaction.annotation.*;
 @ContextConfiguration({ "/other-tiers.xml", "/datasource-test.xml" })
 @Transactional
 public class UserServiceTest {
-
+    
 }
