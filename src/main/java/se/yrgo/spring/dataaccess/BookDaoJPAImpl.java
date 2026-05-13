@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.*;
-import se.yrgo.spring.domain.Book;
+import se.yrgo.spring.domain.*;
 
 // Moa
 
@@ -33,6 +33,11 @@ public class BookDaoJPAImpl implements BookDao {
 
     @Override
     public void registerNewBook(Book newBook) {
+        Set<Author> authors = new HashSet<>();
+        for (Author a : newBook.getAuthors()) {
+            authors.add(em.merge(a));
+        }
+        newBook.setAuthors(authors);
         em.persist(newBook);
     }
 
