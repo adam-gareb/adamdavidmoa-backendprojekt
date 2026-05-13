@@ -17,8 +17,11 @@ import se.yrgo.spring.services.book.*;
 import se.yrgo.spring.services.loan.*;
 import se.yrgo.spring.services.user.*;
 
+//This class has all the methods to run the database from the main class. 
+// runLibrary implements all the other methods so its easy to use in the main class
 public class LibraryApplication {
 
+    // This method implements all methods and runs the whole database
     public void runLibrary() {
         try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
 
@@ -78,18 +81,6 @@ public class LibraryApplication {
             System.out.println("Something went wrong: " + ex.getMessage());
         }
 
-    }
-
-    public void createMockData() {
-        try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
-            AuthorService author = container.getBean(AuthorService.class);
-            BookService book = container.getBean(BookService.class);
-            UserService user = container.getBean(UserService.class);
-            LoanService loan = container.getBean(LoanService.class);
-
-            Set<String> ids = new HashSet<>();
-            UniqueIdGenerator idGenerator = new UniqueIdGenerator();
-        }
     }
 
     // Loads all already existing IDs in the database
@@ -325,7 +316,7 @@ public class LibraryApplication {
     }
 
     // David
-    // This method
+    // This method shows all the loans that a user has
     private static void showLoans(UserService user, Scanner input) throws UserNotFoundException {
         System.out.print("Skriv in din mail: ");
         User theUser = null;

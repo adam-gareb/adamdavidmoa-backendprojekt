@@ -6,7 +6,7 @@ import se.yrgo.spring.dataaccess.UserNotFoundException;
 import se.yrgo.spring.domain.*;
 
 // David
-
+// An interface representing a Service class that uses the DaoImpl class to manipulate the database
 public interface UserService {
         public User addUser(String userId,
                         String firstName,

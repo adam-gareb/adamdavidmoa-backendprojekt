@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import se.yrgo.spring.domain.*;
 
 // David
-
+// This class uses the UserDao interface to get data from or manipulate data in the database
 @Repository
 public class UserDaoJpaImpl implements UserDao {
 

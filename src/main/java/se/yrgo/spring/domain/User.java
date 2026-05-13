@@ -5,7 +5,7 @@ import java.util.*;
 import jakarta.persistence.*;
 
 // David
-// This class represents a User entity in a database.
+// This class represents a User entity in a database/a java object.
 @Entity
 public class User {
     @Id
