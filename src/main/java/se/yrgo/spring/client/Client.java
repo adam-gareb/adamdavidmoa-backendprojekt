@@ -1,5 +1,6 @@
 package se.yrgo.spring.client;
 
+//The main class that runs the whole program
 public class Client {
     public static void main(String[] args) {
 

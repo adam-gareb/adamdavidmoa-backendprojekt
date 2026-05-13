@@ -9,7 +9,7 @@ import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // David
-
+// A Class that implements the UserService and is used to manipulate the database
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {

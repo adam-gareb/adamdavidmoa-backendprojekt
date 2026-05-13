@@ -5,7 +5,7 @@ import java.util.*;
 import se.yrgo.spring.domain.*;
 
 // David
-
+// An interface that represents a service class that is used to manipulate the database
 public interface UserDao {
     public List<User> getAllUsers();
 

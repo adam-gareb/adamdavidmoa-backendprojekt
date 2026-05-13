@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import se.yrgo.spring.dataaccess.LoanDao;
+import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.domain.*;
 
 //Adam
@@ -46,7 +47,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public Loan findLoanById(String loanId){
+    public Loan findLoanById(String loanId) throws LoanNotFoundException{
         return dao.findByLoanId(loanId);
     }
     

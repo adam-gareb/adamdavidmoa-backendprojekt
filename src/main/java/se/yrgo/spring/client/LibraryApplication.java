@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.context.support.*;
 
 import se.yrgo.spring.dataaccess.BookNotFoundException;
+import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.dataaccess.UserNotFoundException;
 import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
@@ -16,8 +17,11 @@ import se.yrgo.spring.services.book.*;
 import se.yrgo.spring.services.loan.*;
 import se.yrgo.spring.services.user.*;
 
+//This class has all the methods to run the database from the main class. 
+// runLibrary implements all the other methods so its easy to use in the main class
 public class LibraryApplication {
 
+    // This method implements all methods and runs the whole database
     public void runLibrary() {
         try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
 
@@ -78,7 +82,6 @@ public class LibraryApplication {
         }
 
     }
-
     
     public void createMockData() {
         try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
@@ -320,8 +323,8 @@ public class LibraryApplication {
         }
     }
 
-    //David
-    // This method 
+    // David
+    // This method shows all the loans that a user has
     private static void showLoans(UserService user, Scanner input) throws UserNotFoundException {
         System.out.print("Skriv in din mail: ");
         User theUser = null;
@@ -336,13 +339,21 @@ public class LibraryApplication {
         }
 
         List<Loan> loans = theUser.getLoans();
-        loans.forEach(System.out::println);
+
+        if (loans.isEmpty()) {
+            System.out.println("Det finns inga lån för tillfället...");
+        }
+        else{
+            loans.forEach(System.out::println);
+        }
+
         System.out.print("Skriv 0 för att avsluta: ");
         input.nextLine();
     }
 
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
-            Set<String> ids, UniqueIdGenerator idGenerator, Scanner input) throws BookNotFoundException, UserNotFoundException {
+            Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
+            throws BookNotFoundException, UserNotFoundException, LoanNotFoundException {
         boolean loggedIn = false;
         while (true) {
             String choice = "";
@@ -459,7 +470,7 @@ public class LibraryApplication {
     // Contributed to creating method manageLoans
     // A method for the admin menu to handle loans. Includes updating and removing
     // loans.
-    private static void manageLoans(LoanService loan, Scanner input) {
+    private static void manageLoans(LoanService loan, Scanner input) throws LoanNotFoundException {
         String choice;
         boolean loanMenu = true;
         System.out.println("Lån");
@@ -480,10 +491,19 @@ public class LibraryApplication {
             switch (choice) {
                 case "1" -> {
                     System.out.println("Ange lånets ID för att radera lån:");
-                    String loanId = input.nextLine();
+                    Loan foundLoan = null;
 
-                    loan.removeLoan(loanId);
+                    while (foundLoan == null) {
+                        try {
+                            String loanId = input.nextLine();
+                            foundLoan = loan.findLoanById(loanId);
+                        } catch (LoanNotFoundException e) {
+                            System.out.println(e.getMessage());
+                            System.out.print("Försök igen: ");
+                        }
+                    }
 
+                    loan.removeLoan(foundLoan.getLoanId());
                     System.out.println("Lån borttaget.\n");
                 }
                 case "2" -> {
@@ -561,7 +581,7 @@ public class LibraryApplication {
                         book.registerNewBook(isbn, title, authors);
                         System.out.println("\nBok registrerad.");
                     }
-                    //cleanScreen();
+                    // cleanScreen();
                 }
                 case "2" -> {
                     System.out.println("Ange bokens ISBN för att radera: ");

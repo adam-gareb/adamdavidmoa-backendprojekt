@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.domain.*;
 
 //Adam
@@ -19,5 +20,5 @@ public interface LoanService {
 
     public Loan findLoanByUserId(String userId);
 
-    public Loan findLoanById(String loanId);
+    public Loan findLoanById(String loanId) throws LoanNotFoundException;
 }
