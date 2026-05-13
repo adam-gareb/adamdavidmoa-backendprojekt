@@ -5,6 +5,7 @@ import java.util.*;
 import se.yrgo.spring.domain.Book;
 
 // Moa
+// DAO interface to represent the service class.
 
 public interface BookDao {
     public List<Book> getEntireCatalogue();

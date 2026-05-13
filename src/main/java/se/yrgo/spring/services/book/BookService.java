@@ -5,6 +5,7 @@ import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // Moa
+// Service interface for handling books. Defines necessary methods.
 
 public interface BookService {
     public List<Book> getAllBooksByAuthor(String author);
