@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
@@ -34,10 +35,14 @@ public class AuthorDaoJPAImpl implements AuthorDao {
     }
 
     @Override
-    public Author findByName(String name) {
-        return em.createQuery("SELECT a FROM Author a WHERE a.name = :name", Author.class)
-                .setParameter("name", name)
-                .getSingleResult();
+    public Author findByName(String name) throws AuthorNotFoundException {
+        try {
+            return em.createQuery("SELECT a FROM Author a WHERE a.name = :name", Author.class)
+                    .setParameter("name", name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new AuthorNotFoundException("Ingen författare hittades med namn: " + name);
+        }
     }
 
     @Override
