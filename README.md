@@ -8,3 +8,5 @@ To run the project on unix based systems do this:
 To run the project on windows based systems do this:
 
 either open either of the .bat files or run this in cmd `run.bat` or `run_and_remove_database.bat`
+
+To log into the admin menu, use the username: admin and the password: sa
