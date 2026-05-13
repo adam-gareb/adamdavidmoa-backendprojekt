@@ -61,9 +61,9 @@ public class Author {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-                    Author ID: %s
-                    Author: %s
-                    Books by author: %s
+                Författare ID: %s
+                Författare namn: %s
+                Böcker av författaren: %s
                 """, authorId, name, bookTitles);
     }
 

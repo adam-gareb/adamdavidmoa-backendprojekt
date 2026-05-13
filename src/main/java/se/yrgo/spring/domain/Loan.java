@@ -81,12 +81,12 @@ public class Loan {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-                Loan ID: %s
-                User ID: %s
-                User: %s %s
-                Book(s) loaned: %s
-                Start date: %s
-                Due date: %s
+                Lån ID: %s
+                Användare ID: %s
+                Avändare namn: %s %s
+                Böcker lånade: %s
+                Start datum: %s
+                Inlämningsdatum: %s
                 """,
                 loanId,
                 user.getUserId(),

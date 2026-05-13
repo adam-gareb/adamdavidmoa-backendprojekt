@@ -102,10 +102,10 @@ public class Book {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-                Book isbn: %s
-                Book title: %s
-                Author: %s
-                Author ID: %s
+                Bok ISBN: %s
+                Titel: %s
+                Författare: %s
+                Författare ID: %s
                 """, isbn, title, authorNames, authorId);
     }
 
