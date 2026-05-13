@@ -4,10 +4,24 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%msg%n" />
         </Console>
+
+        <RollingFile name="PERF_FILE" fileName="logs/performance.log"
+            filePattern="logs/performance.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{HH:mm:ss} %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+
     </Appenders>
     <Loggers>
         <Logger name="org.hibernate" level="ERROR" />
         <Logger name="org.springframework" level="ERROR" />
+
+        <Logger name="se.yrgo.spring.advice.PerformanceTimingAdvice" level="INFO" additivity="false">
+            <AppenderRef ref="PERF_FILE" />
+        </Logger>
+
         <Root level="ERROR">
             <AppenderRef ref="Console" />
         </Root>

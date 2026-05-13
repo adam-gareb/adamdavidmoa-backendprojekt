@@ -29,3 +29,6 @@ buildNumber.properties
 
 #Database files
 database.*
+
+#Logs
+logs
