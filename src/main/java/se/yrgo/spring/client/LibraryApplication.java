@@ -340,7 +340,14 @@ public class LibraryApplication {
         }
 
         List<Loan> loans = theUser.getLoans();
-        loans.forEach(System.out::println);
+
+        if (loans.isEmpty()) {
+            System.out.println("Det finns inga lån för tillfället...");
+        }
+        else{
+            loans.forEach(System.out::println);
+        }
+
         System.out.print("Skriv 0 för att avsluta: ");
         input.nextLine();
     }
