@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import se.yrgo.spring.domain.Book;
 
 // Moa
+// DAO implementation that uses JPA (EntityManager) for databasecalls.
 
 @Repository
 public class BookDaoJPAImpl implements BookDao {
