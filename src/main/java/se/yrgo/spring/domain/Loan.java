@@ -74,6 +74,55 @@ public class Loan {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((loanId == null) ? 0 : loanId.hashCode());
+        result = prime * result + ((books == null) ? 0 : books.hashCode());
+        result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+        result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
+        result = prime * result + ((user == null) ? 0 : user.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Loan other = (Loan) obj;
+        if (loanId == null) {
+            if (other.loanId != null)
+                return false;
+        } else if (!loanId.equals(other.loanId))
+            return false;
+        if (books == null) {
+            if (other.books != null)
+                return false;
+        } else if (!books.equals(other.books))
+            return false;
+        if (startDate == null) {
+            if (other.startDate != null)
+                return false;
+        } else if (!startDate.equals(other.startDate))
+            return false;
+        if (dueDate == null) {
+            if (other.dueDate != null)
+                return false;
+        } else if (!dueDate.equals(other.dueDate))
+            return false;
+        if (user == null) {
+            if (other.user != null)
+                return false;
+        } else if (!user.equals(other.user))
+            return false;
+        return true;
+    }
+
+    @Override
     public String toString() {
         String titles = books.stream()
                 .map(Book::getTitle)
