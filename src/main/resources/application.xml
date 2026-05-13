@@ -11,7 +11,7 @@
                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <!-- Låter Spring automatiskt hitta våra klasser/beans -->
+    <!-- Lets Spring Automatically find our classes/beans -->
     <context:component-scan base-package="se.yrgo.spring" />
 
     <aop:aspectj-autoproxy />
@@ -48,7 +48,7 @@
             ref="entityManagerFactory" />
     </bean>
 
-    <!-- Aktiverar transaktionshantering -->
+    <!-- Activates transaction handling -->
     <tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>
