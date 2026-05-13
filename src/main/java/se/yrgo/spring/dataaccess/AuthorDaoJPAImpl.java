@@ -10,7 +10,7 @@ import se.yrgo.spring.domain.Author;
 import se.yrgo.spring.domain.Book;
 
 // Adam
-
+// A JPA implementation for the AuthorDao class, for changing and creating data
 @Repository
 public class AuthorDaoJPAImpl implements AuthorDao {
 
@@ -26,7 +26,6 @@ public class AuthorDaoJPAImpl implements AuthorDao {
     public void delete(Author author) {
         Author theAuthor = em.find(Author.class, author.getId());
         if (theAuthor != null) {
-            // Ta bort författaren från alla böckers ägande sida
             for (Book book : theAuthor.getAllBooks()) {
                 book.getAuthors().remove(theAuthor);
             }

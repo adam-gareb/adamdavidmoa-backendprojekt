@@ -9,8 +9,8 @@ import se.yrgo.spring.dataaccess.LoanDao;
 import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.domain.*;
 
-//Adam
-
+// Adam
+// Implementation class for LoanService, to implements methods to work together with the DAO
 @Service
 @Transactional
 public class LoanServiceImpl implements LoanService {

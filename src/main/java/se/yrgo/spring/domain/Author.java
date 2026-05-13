@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.*;
 
 // Adam
-
+// Author entity class, to use together with Service class, JPA and DAO
 @Entity
 public class Author {
     @Id

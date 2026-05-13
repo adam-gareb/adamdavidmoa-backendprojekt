@@ -8,7 +8,8 @@ import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // Adam
-
+// Implementation class for AuthorService, to implement the methods and work together with
+// the DAO 
 @Service
 @Transactional
 public class AuthorServiceImpl implements AuthorService {

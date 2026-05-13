@@ -12,7 +12,7 @@ import jakarta.persistence.PersistenceContext;
 import se.yrgo.spring.domain.*;
 
 // Adam & Moa
-
+// A JPA implementation for LoanDAO, for changing and creating data
 @Repository
 public class LoanDaoJPAImpl implements LoanDao {
 
