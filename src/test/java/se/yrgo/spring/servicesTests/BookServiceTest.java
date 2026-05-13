@@ -29,8 +29,6 @@ public class BookServiceTest {
     @Autowired
     private BookService service;
 
-    // Creating an author and a list of books connected. Then we test if the
-    // author's book list is accurate in size.
     @Test
     public void testGetAllBooksByAuthor() {
 
@@ -40,6 +38,7 @@ public class BookServiceTest {
         Set<Author> authors = new HashSet<>();
         authors.add(author);
 
+        @SuppressWarnings("unused")
         List<Book> existingBooks = List.of(
                 service.registerNewBook("1", "Coraline", authors),
                 service.registerNewBook("2", "Good Omens", authors),
@@ -51,8 +50,6 @@ public class BookServiceTest {
 
     }
 
-    // We add a book (and author) to the database and test if we can find it with
-    // isbn. We also test if the created book is null.
     @Test
     public void testGetBookByIsbn() throws BookNotFoundException {
         Author author = new Author();
@@ -69,8 +66,6 @@ public class BookServiceTest {
         assertEquals("10", testBook.getIsbn());
     }
 
-    // We add a list of books to the database and test if the size of list is
-    // accurate.
     @Test
     public void testGetEntireCatalogue() {
 
@@ -92,7 +87,6 @@ public class BookServiceTest {
 
     }
 
-    // We add a book and test if it's saved correctly.
     @Test
     public void testRegisterNewBook() throws BookNotFoundException {
 
@@ -112,7 +106,6 @@ public class BookServiceTest {
 
     }
 
-    // We add a book, then delete it and test if it's successful.
     @Test
     public void testDeleteFromStock() {
 
@@ -131,8 +124,6 @@ public class BookServiceTest {
 
     }
 
-    // We add a book and update it's isbn, then testing to see if the new change is
-    // accurate.
     @Test
     public void testUpdateBook() throws BookNotFoundException {
 

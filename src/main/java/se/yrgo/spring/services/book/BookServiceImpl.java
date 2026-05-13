@@ -8,6 +8,7 @@ import se.yrgo.spring.dataaccess.*;
 import se.yrgo.spring.domain.*;
 
 // Moa
+// Service implementation for handling books. Connects service with database-calls.
 
 @Service
 @Transactional

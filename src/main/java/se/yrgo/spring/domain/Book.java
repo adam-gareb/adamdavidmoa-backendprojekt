@@ -6,6 +6,7 @@ import java.util.stream.*;
 import jakarta.persistence.*;
 
 // Moa
+// JPA entity representing a Book in the system.
 
 @Entity
 public class Book {
