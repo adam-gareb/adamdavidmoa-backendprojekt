@@ -18,7 +18,7 @@ import se.yrgo.spring.services.loan.*;
 import se.yrgo.spring.services.user.*;
 
 //This class has all the methods to run the database from the main class. 
-// runLibrary implements all the other methods so its easy to use in the main class
+// runLibrary implements all the other methods so it's easy to use in the main class
 public class LibraryApplication {
 
     // This method implements all methods and runs the whole database
@@ -33,14 +33,14 @@ public class LibraryApplication {
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
             loadAllIDs(author, user, loan, ids);
-            
+
             Scanner input = new Scanner(System.in);
 
             while (true) {
                 cleanScreen();
                 System.out.printf("""
                         Välkommen till biblioteket
-                        1. Logga in/Skapa användare
+                        1. Skapa användare
                         2. Redigera användare
                         3. Låna en bok
                         4. Visa dina lån
@@ -82,46 +82,50 @@ public class LibraryApplication {
         }
 
     }
-    
+
     public void createMockData() {
         try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
             AuthorService author = container.getBean(AuthorService.class);
             BookService book = container.getBean(BookService.class);
             UserService user = container.getBean(UserService.class);
             LoanService loan = container.getBean(LoanService.class);
-            
+
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
         }
     }
-    
+
     // Loads all already existing IDs in the database
     private void loadAllIDs(AuthorService author, UserService user, LoanService loan, Set<String> ids) {
         user.getAllUsers().forEach(u -> ids.add(u.getUserId()));
         author.getAllAuthors().forEach(a -> ids.add(a.getAuthorId()));
         loan.getAllLoans().forEach(l -> ids.add(l.getLoanId()));
     }
-    //Makes the user need to press enter to continue
+
+    // Makes the user need to press enter to continue
     private static void enterMethod(Scanner input, String spacer) {
         System.out.println(spacer.repeat(10));
         cursiveText("klicka ENTER för att fortsätta");
         input.nextLine();
     }
-    //Makes the text cursive
+
+    // Makes the text cursive
     private static void cursiveText(String x) {
         System.out.println("\u001B[3m" + x + "\u001B[0m");
     }
-    //Clears the terminal screen
+
+    // Clears the terminal screen
     private static void cleanScreen() {
         System.out.println("\033[H\033[2J");
     }
-    //Creates a spacer in whatever String you want
+
+    // Creates a spacer in whatever String you want
     private static void spacer(String x) {
         System.out.println(x.repeat(10));
     }
 
-    //David
-    //A method to sign up as a user in the library, it adds a User to the database
+    // David
+    // A method to sign up as a user in the library, it adds a User to the database
     private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
             throws UserNotFoundException {
         String email;
@@ -154,7 +158,8 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created the method editUser, where you can change mail, password, name, address, zip,
+    // Created the method editUser, where you can change mail, password, name,
+    // address, zip,
     // and city for a specific user
     private static void editUser(UserService user, Scanner input, String choice) throws UserNotFoundException {
         System.out.printf("Skriv in din mail: ");
@@ -341,17 +346,17 @@ public class LibraryApplication {
 
         if (loans.isEmpty()) {
             System.out.println("\nDet finns inga lån för tillfället.\n");
-        }
-        else{
+        } else {
             loans.forEach(System.out::println);
         }
 
-        System.out.print("Skriv 0 för att avsluta: ");
+        cursiveText("Skriv 0 för att avsluta: ");
         input.nextLine();
     }
 
     // Moa
-    // A method for the administrator to handle users, books, loans, and authors.
+    // A method that calls separate methods for handling users, loans, books and
+    // authors.
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
             Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
             throws BookNotFoundException, UserNotFoundException, LoanNotFoundException {
@@ -468,8 +473,8 @@ public class LibraryApplication {
         }
     }
 
-    // Adam
-    // Contributed to creating method manageLoans
+    // Adam contributed to creating method manageLoans.
+    // Moa
     // A method for the admin menu to handle loans. Includes updating and removing
     // loans.
     private static void manageLoans(LoanService loan, Scanner input) throws LoanNotFoundException {
@@ -528,6 +533,7 @@ public class LibraryApplication {
         }
     }
 
+    // Moa
     // A method for the admin menu that handles books. Includes adding and removing
     // books.
     private static void manageBooks(AuthorService author, BookService book, Set<String> ids,
@@ -610,6 +616,7 @@ public class LibraryApplication {
         }
     }
 
+    // Moa
     // A method in the admin menu that handles users. Includes update and deletion
     // of user.
     private static void manageUsers(UserService user, Scanner input) throws UserNotFoundException {

@@ -1,6 +1,6 @@
 package se.yrgo.spring.client;
 
-//The main class that runs the whole program
+//The main class that runs the whole program. We call on the method runLibrary() from LibraryApplication.
 public class Client {
     public static void main(String[] args) {
 
