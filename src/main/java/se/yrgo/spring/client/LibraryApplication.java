@@ -23,7 +23,7 @@ public class LibraryApplication {
 
     // This method implements all methods and runs the whole database
     public void runLibrary() {
-        try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
+        try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("production-application.xml")) {
 
             AuthorService author = container.getBean(AuthorService.class);
             BookService book = container.getBean(BookService.class);

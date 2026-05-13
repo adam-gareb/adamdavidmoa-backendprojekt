@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:aop="http://www.springframework.org/schema/aop"
@@ -15,16 +14,6 @@
     <context:component-scan base-package="se.yrgo.spring" />
 
     <aop:aspectj-autoproxy />
-
-    <!--  We create our dataSource which will create database connections (using Apache DBCP
-    connection pool  -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-        <property name="url"
-            value="jdbc:hsqldb:file:database.dat;shutdown=true" />
-        <property name="username" value="sa" />
-        <property name="password" value="" />
-    </bean>
 
     <!-- Entity manager -->
     <bean id="entityManagerFactory"
