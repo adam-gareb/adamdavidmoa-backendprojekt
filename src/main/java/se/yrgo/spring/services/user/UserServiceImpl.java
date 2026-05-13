@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
             String zip,
             String city) {
         try {
-            User user = dao.findUserById(userId); // hämta befintlig
+            User user = dao.findUserById(userId);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setEmail(email);
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             user.setAddress(address);
             user.setZip(zip);
             user.setCity(city);
-            dao.update(user); // nu har den rätt id → UPDATE
+            dao.update(user);
             return user;
         } catch (Exception ex) {
             System.err.println("Something went wrong with updating a user: " + ex.getMessage());
