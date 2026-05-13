@@ -33,7 +33,7 @@ public class LibraryApplication {
             Set<String> ids = new HashSet<>();
             UniqueIdGenerator idGenerator = new UniqueIdGenerator();
             loadAllIDs(author, user, loan, ids);
-
+            
             Scanner input = new Scanner(System.in);
 
             while (true) {
@@ -82,38 +82,46 @@ public class LibraryApplication {
         }
 
     }
-
+    
+    public void createMockData() {
+        try (ClassPathXmlApplicationContext container = new ClassPathXmlApplicationContext("application.xml")) {
+            AuthorService author = container.getBean(AuthorService.class);
+            BookService book = container.getBean(BookService.class);
+            UserService user = container.getBean(UserService.class);
+            LoanService loan = container.getBean(LoanService.class);
+            
+            Set<String> ids = new HashSet<>();
+            UniqueIdGenerator idGenerator = new UniqueIdGenerator();
+        }
+    }
+    
     // Loads all already existing IDs in the database
     private void loadAllIDs(AuthorService author, UserService user, LoanService loan, Set<String> ids) {
         user.getAllUsers().forEach(u -> ids.add(u.getUserId()));
         author.getAllAuthors().forEach(a -> ids.add(a.getAuthorId()));
         loan.getAllLoans().forEach(l -> ids.add(l.getLoanId()));
     }
-
-    // Makes the user need to press enter to continue
+    //Makes the user need to press enter to continue
     private static void enterMethod(Scanner input, String spacer) {
         System.out.println(spacer.repeat(10));
         cursiveText("klicka ENTER för att fortsätta");
         input.nextLine();
     }
-
-    // Makes the text cursive
+    //Makes the text cursive
     private static void cursiveText(String x) {
         System.out.println("\u001B[3m" + x + "\u001B[0m");
     }
-
-    // Clears the terminal screen
+    //Clears the terminal screen
     private static void cleanScreen() {
         System.out.println("\033[H\033[2J");
     }
-
-    // Creates a spacer in whatever String you want
+    //Creates a spacer in whatever String you want
     private static void spacer(String x) {
         System.out.println(x.repeat(10));
     }
 
-    // David
-    // A method to sign up as a user in the library, it adds a User to the database
+    //David
+    //A method to sign up as a user in the library, it adds a User to the database
     private static void signUp(UserService user, Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
             throws UserNotFoundException {
         String email;
@@ -146,8 +154,7 @@ public class LibraryApplication {
     }
 
     // Adam
-    // Created the method editUser, where you can change mail, password, name,
-    // address, zip,
+    // Created the method editUser, where you can change mail, password, name, address, zip,
     // and city for a specific user
     private static void editUser(UserService user, Scanner input, String choice) throws UserNotFoundException {
         System.out.printf("Skriv in din mail: ");
@@ -221,7 +228,7 @@ public class LibraryApplication {
                     enterMethod(input, "");
                 }
                 default ->
-                    System.out.println("\nNågot gick fel. Försök igen!\n");
+                    System.out.println("Något gick fel. Försök igen!");
             }
             user.updateUser(theUser.getUserId(),
                     theUser.getFirstName(),
@@ -333,7 +340,7 @@ public class LibraryApplication {
         List<Loan> loans = theUser.getLoans();
 
         if (loans.isEmpty()) {
-            System.out.println("Det finns inga lån för tillfället...");
+            System.out.println("\nDet finns inga lån för tillfället.\n");
         }
         else{
             loans.forEach(System.out::println);
@@ -343,6 +350,8 @@ public class LibraryApplication {
         input.nextLine();
     }
 
+    // Moa
+    // A method for the administrator to handle users, books, loans, and authors.
     private static void adminMenu(AuthorService author, BookService book, UserService user, LoanService loan,
             Set<String> ids, UniqueIdGenerator idGenerator, Scanner input)
             throws BookNotFoundException, UserNotFoundException, LoanNotFoundException {
@@ -414,6 +423,7 @@ public class LibraryApplication {
         String choice;
         boolean authorMenu = true;
         System.out.println("Författare");
+        spacer("-");
         while (authorMenu) {
             List<Author> authors = author.getAllAuthors();
             if (authors.isEmpty()) {
@@ -466,10 +476,11 @@ public class LibraryApplication {
         String choice;
         boolean loanMenu = true;
         System.out.println("Lån");
+        spacer("-");
         while (loanMenu) {
             List<Loan> loans = loan.getAllLoans();
             if (loans.isEmpty()) {
-                System.out.println("Det finns inga lån för tillfället.");
+                System.out.println("\nDet finns inga lån för tillfället.\n");
             } else {
                 loans.forEach(System.out::println);
                 spacer("-");
@@ -528,7 +539,7 @@ public class LibraryApplication {
             spacer("-");
             List<Book> books = book.getEntireCatalogue();
             if (books.isEmpty()) {
-                System.out.println("Det finns inga böcker för tillfället.");
+                System.out.println("Det finns inga böcker för tillfället.\n\n");
             } else {
                 books.forEach(System.out::println);
                 spacer("-");
@@ -571,7 +582,7 @@ public class LibraryApplication {
                         System.out.println("Denna bok finns redan i systemet, ISBN: " + isbn);
                     } else {
                         book.registerNewBook(isbn, title, authors);
-                        System.out.println("\nBok registrerad.");
+                        System.out.println("\nBok registrerad.\n");
                     }
                     // cleanScreen();
                 }
@@ -592,7 +603,7 @@ public class LibraryApplication {
                 }
 
                 default -> {
-                    System.out.println("\nNågot gick fel. Försök igen!\n");
+                    System.out.println("Något gick fel. Försök igen!");
                 }
 
             }
@@ -607,8 +618,9 @@ public class LibraryApplication {
         System.out.println("Användare:\n");
         while (userMenu) {
             List<User> users = user.getAllUsers();
+            spacer("-");
             if (users.isEmpty()) {
-                System.out.println("Det finns inga användare för tillfället.");
+                System.out.println("Det finns inga användare för tillfället.\n");
             } else {
                 users.forEach(System.out::println);
                 spacer("-");
@@ -621,7 +633,7 @@ public class LibraryApplication {
             choice = input.nextLine();
             switch (choice) {
                 case "1" -> {
-                    System.out.println("Skriv in användarens ID för uppdatering: ");
+                    System.out.println("\nSkriv in användarens ID för uppdatering: ");
                     cursiveText("0 för att avbryta");
                     String id = input.nextLine();
                     if (id.equals("0")) {
@@ -687,7 +699,7 @@ public class LibraryApplication {
                                 System.out.println("");
 
                             default ->
-                                System.out.println("\nNågot gick fel. Försök igen!\n");
+                                System.out.println("Något gick fel. Försök igen!");
                         }
                     }
 
@@ -719,14 +731,14 @@ public class LibraryApplication {
                         System.out.println("Nånting gick fel vid radering av användare med ID: " + id);
                     } else {
                         user.deleteUser(id);
-                        System.out.println("Användare borttagen.");
+                        System.out.println("\nAnvändare borttagen.\n");
                     }
                 }
                 case "0" -> {
                     userMenu = false;
                 }
                 default -> {
-                    System.out.println("\nNågot gick fel. Försök igen!\n");
+                    System.out.println("Något gick fel. Försök igen!");
                 }
             }
         }

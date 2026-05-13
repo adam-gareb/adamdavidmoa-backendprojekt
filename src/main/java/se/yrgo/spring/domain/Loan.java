@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 import jakarta.persistence.*;
 
 // Adam
-
+// Loan entity class, to use together with Service class, JPA and DAO
 @Entity
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String loanId;
-    @ManyToMany(fetch = FetchType.EAGER) // En loan kan ha många böcker, en bok kan finnas i många loans
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Book> books;
     private Date startDate;
     private Date dueDate;
@@ -81,12 +81,12 @@ public class Loan {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-                Loan ID: %s
-                User ID: %s
-                User: %s %s
-                Book(s) loaned: %s
-                Start date: %s
-                Due date: %s
+                Lån ID: %s
+                Användare ID: %s
+                Avändare namn: %s %s
+                Böcker lånade: %s
+                Start datum: %s
+                Inlämningsdatum: %s
                 """,
                 loanId,
                 user.getUserId(),

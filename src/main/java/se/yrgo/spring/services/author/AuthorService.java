@@ -5,7 +5,7 @@ import se.yrgo.spring.domain.*;
 import java.util.*;
 
 // Adam
-
+// Service interface for Author
 public interface AuthorService {
 
     public Author addAuthor(String authorId, String name);

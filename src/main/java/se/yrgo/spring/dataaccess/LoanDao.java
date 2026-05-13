@@ -2,10 +2,10 @@ package se.yrgo.spring.dataaccess;
 
 import java.util.*;
 
-// Adam
-
 import se.yrgo.spring.domain.*;
 
+// Adam
+// A DAO interface for Loan, for the service class LoanService
 public interface LoanDao {
 
     public List<Loan> getAllLoans();

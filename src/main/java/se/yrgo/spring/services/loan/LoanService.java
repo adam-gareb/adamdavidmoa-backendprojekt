@@ -7,8 +7,8 @@ import java.util.Set;
 import se.yrgo.spring.dataaccess.LoanNotFoundException;
 import se.yrgo.spring.domain.*;
 
-//Adam
-
+// Adam
+// Service interface for Loan
 public interface LoanService {
     public Loan addLoan(String loanId, Set<Book> books, Date startDate, Date dueDate, User user);
 

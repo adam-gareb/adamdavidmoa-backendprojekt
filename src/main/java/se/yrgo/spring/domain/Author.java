@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import jakarta.persistence.*;
 
 // Adam
-
+// Author entity class, to use together with Service class, JPA and DAO
 @Entity
 public class Author {
     @Id
@@ -61,9 +61,9 @@ public class Author {
                 .collect(Collectors.joining(", "));
 
         return String.format("""
-                    Author ID: %s
-                    Author: %s
-                    Books by author: %s
+                Författare ID: %s
+                Författare namn: %s
+                Böcker av författaren: %s
                 """, authorId, name, bookTitles);
     }
 
