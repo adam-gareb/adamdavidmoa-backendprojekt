@@ -33,7 +33,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findAuthorByName(String name) {
+    public Author findAuthorByName(String name) throws AuthorNotFoundException {
         return dao.findByName(name);
     }
 
